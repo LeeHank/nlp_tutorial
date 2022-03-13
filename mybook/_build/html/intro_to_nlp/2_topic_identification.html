@@ -1,0 +1,3288 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2. Simple topic identification &#8212; My sample book</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3. Text classification" href="4_text_classification.html" />
+    <link rel="prev" title="1. Regular expressions &amp; word tokenization" href="1_regex_tokenize.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">My sample book</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Welcome to your Jupyter Book
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Intro to NLP
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="1_regex_tokenize.html">
+   1. Regular expressions &amp; word tokenization
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   2. Simple topic identification
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="4_text_classification.html">
+   3. Text classification
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/intro_to_nlp/2_topic_identification.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/executablebooks/jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fintro_to_nlp/2_topic_identification.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/intro_to_nlp/2_topic_identification.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bag-of-words">
+   2.1. bag-of-words
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#text-preprocessing">
+   2.2. text preprocessing
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#intro-to-gensim">
+   2.3. intro to
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     gensim
+    </span>
+   </code>
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     2.3.1. 範例資料
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id-vs-token">
+     2.3.2. id vs token 對應表
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bag-of-word">
+     2.3.3. bag of word
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#tf-idf">
+     2.3.4. tf-idf
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Simple topic identification</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bag-of-words">
+   2.1. bag-of-words
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#text-preprocessing">
+   2.2. text preprocessing
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#intro-to-gensim">
+   2.3. intro to
+   <code class="docutils literal notranslate">
+    <span class="pre">
+     gensim
+    </span>
+   </code>
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     2.3.1. 範例資料
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id-vs-token">
+     2.3.2. id vs token 對應表
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bag-of-word">
+     2.3.3. bag of word
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#tf-idf">
+     2.3.4. tf-idf
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="simple-topic-identification">
+<h1><span class="section-number">2. </span>Simple topic identification<a class="headerlink" href="#simple-topic-identification" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nltk</span>
+<span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">sent_tokenize</span>
+<span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">word_tokenize</span>
+
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="bag-of-words">
+<h2><span class="section-number">2.1. </span>bag-of-words<a class="headerlink" href="#bag-of-words" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>這邊要來練習，斷詞後，製作詞頻。</p></li>
+<li><p>以下以 <code class="docutils literal notranslate"><span class="pre">article</span></code> 這個字串為例，從斷詞到製作詞頻走一次：</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">article</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\&#39;\&#39;\&#39;</span><span class="s1">Debugging</span><span class="se">\&#39;\&#39;\&#39;</span><span class="s1"> is the process of finding and resolving of defects that prevent correct operation of computer software or a system.  </span><span class="se">\n\n</span><span class="s1">Numerous books have been written about debugging (see below: #Further reading|Further reading), as it involves numerous aspects, including interactive debugging, control flow, integration testing, Logfile|log files, monitoring (Application monitoring|application, System Monitoring|system), memory dumps, Profiling (computer programming)|profiling, Statistical Process Control, and special design tactics to improve detection while simplifying changes.</span><span class="se">\n\n</span><span class="s1">Origin</span><span class="se">\n</span><span class="s1">A computer log entry from the Mark&amp;nbsp;II, with a moth taped to the page</span><span class="se">\n\n</span><span class="s1">The terms &quot;bug&quot; and &quot;debugging&quot; are popularly attributed to Admiral Grace Hopper in the 1940s.[http://foldoc.org/Grace+Hopper Grace Hopper]  from FOLDOC While she was working on a Harvard Mark II|Mark II Computer at Harvard University, her associates discovered a moth stuck in a relay and thereby impeding operation, whereupon she remarked that they were &quot;debugging&quot; the system. However the term &quot;bug&quot; in the meaning of technical error dates back at least to 1878 and Thomas Edison (see software bug for a full discussion), and &quot;debugging&quot; seems to have been used as a term in aeronautics before entering the world of computers. Indeed, in an interview Grace Hopper remarked that she was not coining the term{{Citation needed|date=July 2015}}. The moth fit the already existing terminology, so it was saved.  A letter from J. Robert Oppenheimer (director of the WWII atomic bomb &quot;Manhattan&quot; project at Los Alamos, NM) used the term in a letter to Dr. Ernest Lawrence at UC Berkeley, dated October 27, 1944,http://bancroft.berkeley.edu/Exhibits/physics/images/bigscience25.jpg regarding the recruitment of additional technical staff.</span><span class="se">\n\n</span><span class="s1">The Oxford English Dictionary entry for &quot;debug&quot; quotes the term &quot;debugging&quot; used in reference to airplane engine testing in a 1945 article in the Journal of the Royal Aeronautical Society. An article in &quot;Airforce&quot; (June 1945 p.&amp;nbsp;50) also refers to debugging, this time of aircraft cameras.  Hopper</span><span class="se">\&#39;</span><span class="s1">s computer bug|bug was found on September 9, 1947. The term was not adopted by computer programmers until the early 1950s.</span><span class="se">\n</span><span class="s1">The seminal article by GillS. Gill, [http://www.jstor.org/stable/98663 The Diagnosis of Mistakes in Programmes on the EDSAC], Proceedings of the Royal Society of London. Series A, Mathematical and Physical Sciences, Vol. 206, No. 1087 (May 22, 1951), pp. 538-554 in 1951 is the earliest in-depth discussion of programming errors, but it does not use the term &quot;bug&quot; or &quot;debugging&quot;.</span><span class="se">\n</span><span class="s1">In the Association for Computing Machinery|ACM</span><span class="se">\&#39;</span><span class="s1">s digital library, the term &quot;debugging&quot; is first used in three papers from 1952 ACM National Meetings.Robert V. D. Campbell, [http://portal.acm.org/citation.cfm?id=609784.609786 Evolution of automatic computation], Proceedings of the 1952 ACM national meeting (Pittsburgh), p 29-32, 1952.Alex Orden, [http://portal.acm.org/citation.cfm?id=609784.609793 Solution of systems of linear inequalities on a digital computer], Proceedings of the 1952 ACM national meeting (Pittsburgh), p. 91-95, 1952.Howard B. Demuth, John B. Jackson, Edmund Klein, N. Metropolis, Walter Orvedahl, James H. Richardson, [http://portal.acm.org/citation.cfm?id=800259.808982 MANIAC], Proceedings of the 1952 ACM national meeting (Toronto), p. 13-16 Two of the three use the term in quotation marks.</span><span class="se">\n</span><span class="s1">By 1963 &quot;debugging&quot; was a common enough term to be mentioned in passing without explanation on page 1 of the Compatible Time-Sharing System|CTSS manual.[http://www.bitsavers.org/pdf/mit/ctss/CTSS_ProgrammersGuide.pdf The Compatible Time-Sharing System], M.I.T. Press, 1963</span><span class="se">\n\n</span><span class="s1">Kidwell</span><span class="se">\&#39;</span><span class="s1">s article </span><span class="se">\&#39;\&#39;</span><span class="s1">Stalking the Elusive Computer Bug</span><span class="se">\&#39;\&#39;</span><span class="s1">Peggy Aldrich Kidwell, [http://ieeexplore.ieee.org/xpl/freeabs_all.jsp?tp=&amp;arnumber=728224&amp;isnumber=15706 Stalking the Elusive Computer Bug], IEEE Annals of the History of Computing, 1998. discusses the etymology of &quot;bug&quot; and &quot;debug&quot; in greater detail.</span><span class="se">\n\n</span><span class="s1">Scope</span><span class="se">\n</span><span class="s1">As software and electronic systems have become generally more complex, the various common debugging techniques have expanded with more methods to detect anomalies, assess impact, and schedule software patches or full updates to a system. The words &quot;anomaly&quot; and &quot;discrepancy&quot; can be used, as being more neutral terms, to avoid the words &quot;error&quot; and &quot;defect&quot; or &quot;bug&quot; where there might be an implication that all so-called </span><span class="se">\&#39;\&#39;</span><span class="s1">errors</span><span class="se">\&#39;\&#39;</span><span class="s1">, </span><span class="se">\&#39;\&#39;</span><span class="s1">defects</span><span class="se">\&#39;\&#39;</span><span class="s1"> or </span><span class="se">\&#39;\&#39;</span><span class="s1">bugs</span><span class="se">\&#39;\&#39;</span><span class="s1"> must be fixed (at all costs). Instead, an impact assessment can be made to determine if changes to remove an </span><span class="se">\&#39;\&#39;</span><span class="s1">anomaly</span><span class="se">\&#39;\&#39;</span><span class="s1"> (or </span><span class="se">\&#39;\&#39;</span><span class="s1">discrepancy</span><span class="se">\&#39;\&#39;</span><span class="s1">) would be cost-effective for the system, or perhaps a scheduled new release might render the change(s) unnecessary. Not all issues are life-critical or mission-critical in a system. Also, it is important to avoid the situation where a change might be more upsetting to users, long-term, than living with the known problem(s) (where the &quot;cure would be worse than the disease&quot;). Basing decisions of the acceptability of some anomalies can avoid a culture of a &quot;zero-defects&quot; mandate, where people might be tempted to deny the existence of problems so that the result would appear as zero </span><span class="se">\&#39;\&#39;</span><span class="s1">defects</span><span class="se">\&#39;\&#39;</span><span class="s1">. Considering the collateral issues, such as the cost-versus-benefit impact assessment, then broader debugging techniques will expand to determine the frequency of anomalies (how often the same &quot;bugs&quot; occur) to help assess their impact to the overall system.</span><span class="se">\n\n</span><span class="s1">Tools</span><span class="se">\n</span><span class="s1">Debugging on video game consoles is usually done with special hardware such as this Xbox (console)|Xbox debug unit intended for developers.</span><span class="se">\n\n</span><span class="s1">Debugging ranges in complexity from fixing simple errors to performing lengthy and tiresome tasks of data collection, analysis, and scheduling updates.  The debugging skill of the programmer can be a major factor in the ability to debug a problem, but the difficulty of software debugging varies greatly with the complexity of the system, and also depends, to some extent, on the programming language(s) used and the available tools, such as </span><span class="se">\&#39;\&#39;</span><span class="s1">debuggers</span><span class="se">\&#39;\&#39;</span><span class="s1">. Debuggers are software tools which enable the programmer to monitor the execution (computers)|execution of a program, stop it, restart it, set breakpoints, and change values in memory. The term </span><span class="se">\&#39;\&#39;</span><span class="s1">debugger</span><span class="se">\&#39;\&#39;</span><span class="s1"> can also refer to the person who is doing the debugging.</span><span class="se">\n\n</span><span class="s1">Generally, high-level programming languages, such as Java (programming language)|Java, make debugging easier, because they have features such as exception handling that make real sources of erratic behaviour easier to spot. In programming languages such as C (programming language)|C or assembly language|assembly, bugs may cause silent problems such as memory corruption, and it is often difficult to see where the initial problem happened. In those cases, memory debugging|memory debugger tools may be needed.</span><span class="se">\n\n</span><span class="s1">In certain situations, general purpose software tools that are language specific in nature can be very useful.  These take the form of </span><span class="se">\&#39;\&#39;</span><span class="s1">List of tools for static code analysis|static code analysis tools</span><span class="se">\&#39;\&#39;</span><span class="s1">.  These tools look for a very specific set of known problems, some common and some rare, within the source code.  All such issues detected by these tools would rarely be picked up by a compiler or interpreter, thus they are not syntax checkers, but more semantic checkers.  Some tools claim to be able to detect 300+ unique problems. Both commercial and free tools exist in various languages.  These tools can be extremely useful when checking very large source trees, where it is impractical to do code walkthroughs.  A typical example of a problem detected would be a variable dereference that occurs </span><span class="se">\&#39;\&#39;</span><span class="s1">before</span><span class="se">\&#39;\&#39;</span><span class="s1"> the variable is assigned a value.  Another example would be to perform strong type checking when the language does not require such.  Thus, they are better at locating likely errors, versus actual errors.  As a result, these tools have a reputation of false positives.  The old Unix </span><span class="se">\&#39;\&#39;</span><span class="s1">Lint programming tool|lint</span><span class="se">\&#39;\&#39;</span><span class="s1"> program is an early example.</span><span class="se">\n\n</span><span class="s1">For debugging electronic hardware (e.g., computer hardware) as well as low-level software (e.g., BIOSes, device drivers) and firmware, instruments such as oscilloscopes, logic analyzers or in-circuit emulator|in-circuit emulators (ICEs) are often used, alone or in combination.  An ICE may perform many of the typical software debugger</span><span class="se">\&#39;</span><span class="s1">s tasks on low-level software and firmware.</span><span class="se">\n\n</span><span class="s1">Debugging process </span><span class="se">\n</span><span class="s1">Normally the first step in debugging is to attempt to reproduce the problem. This can be a non-trivial task, for example as with Parallel computing|parallel processes or some unusual software bugs. Also, specific user environment and usage history can make it difficult to reproduce the problem.</span><span class="se">\n\n</span><span class="s1">After the bug is reproduced, the input of the program may need to be simplified to make it easier to debug. For example, a bug in a compiler can make it Crash (computing)|crash when parsing some large source file. However, after simplification of the test case, only few lines from the original source file can be sufficient to reproduce the same crash. Such simplification can be made manually, using a Divide and conquer algorithm|divide-and-conquer approach. The programmer will try to remove some parts of original test case and check if the problem still exists. When debugging the problem in a Graphical user interface|GUI, the programmer can try to skip some user interaction from the original problem description and check if remaining actions are sufficient for bugs to appear.</span><span class="se">\n\n</span><span class="s1">After the test case is sufficiently simplified, a programmer can use a debugger tool to examine program states (values of variables, plus the call stack) and track down the origin of the problem(s). Alternatively, Tracing (software)|tracing can be used. In simple cases, tracing is just a few print statements, which output the values of variables at certain points of program execution.{{citation needed|date=February 2016}}</span><span class="se">\n\n</span><span class="s1"> Techniques </span><span class="se">\n</span><span class="s1"> </span><span class="se">\&#39;\&#39;</span><span class="s1">Interactive debugging</span><span class="se">\&#39;\&#39;\n</span><span class="s1"> </span><span class="se">\&#39;\&#39;</span><span class="s1">{{visible anchor|Print debugging}}</span><span class="se">\&#39;\&#39;</span><span class="s1"> (or tracing) is the act of watching (live or recorded) trace statements, or print statements, that indicate the flow of execution of a process. This is sometimes called </span><span class="se">\&#39;\&#39;</span><span class="s1">{{visible anchor|printf debugging}}</span><span class="se">\&#39;\&#39;</span><span class="s1">, due to the use of the printf function in C. This kind of debugging was turned on by the command TRON in the original versions of the novice-oriented BASIC programming language. TRON stood for, &quot;Trace On.&quot; TRON caused the line numbers of each BASIC command line to print as the program ran.</span><span class="se">\n</span><span class="s1"> </span><span class="se">\&#39;\&#39;</span><span class="s1">Remote debugging</span><span class="se">\&#39;\&#39;</span><span class="s1"> is the process of debugging a program running on a system different from the debugger. To start remote debugging, a debugger connects to a remote system over a network. The debugger can then control the execution of the program on the remote system and retrieve information about its state.</span><span class="se">\n</span><span class="s1"> </span><span class="se">\&#39;\&#39;</span><span class="s1">Post-mortem debugging</span><span class="se">\&#39;\&#39;</span><span class="s1"> is debugging of the program after it has already Crash (computing)|crashed. Related techniques often include various tracing techniques (for example,[http://www.drdobbs.com/tools/185300443 Postmortem Debugging, Stephen Wormuller, Dr. Dobbs Journal, 2006]) and/or analysis of memory dump (or core dump) of the crashed process. The dump of the process could be obtained automatically by the system (for example, when process has terminated due to an unhandled exception), or by a programmer-inserted instruction, or manually by the interactive user.</span><span class="se">\n</span><span class="s1"> </span><span class="se">\&#39;\&#39;</span><span class="s1">&quot;Wolf fence&quot; algorithm:</span><span class="se">\&#39;\&#39;</span><span class="s1"> Edward Gauss described this simple but very useful and now famous algorithm in a 1982 article for communications of the ACM as follows: &quot;There</span><span class="se">\&#39;</span><span class="s1">s one wolf in Alaska; how do you find it? First build a fence down the middle of the state, wait for the wolf to howl, determine which side of the fence it is on. Repeat process on that side only, until you get to the point where you can see the wolf.&quot;&lt;ref name=&quot;communications of the ACM&quot;&gt;{{cite journal | title=&quot;Pracniques: The &quot;Wolf Fence&quot; Algorithm for Debugging&quot;, | author=E. J. Gauss | year=1982}} This is implemented e.g. in the Git (software)|Git version control system as the command </span><span class="se">\&#39;\&#39;</span><span class="s1">git bisect</span><span class="se">\&#39;\&#39;</span><span class="s1">, which uses the above algorithm to determine which Commit (data management)|commit introduced a particular bug.</span><span class="se">\n</span><span class="s1"> </span><span class="se">\&#39;\&#39;</span><span class="s1">Delta Debugging</span><span class="se">\&#39;\&#39;</span><span class="s1">{{snd}} a technique of automating test case simplification.Andreas Zeller: &lt;cite&gt;Why Programs Fail: A Guide to Systematic Debugging&lt;/cite&gt;, Morgan Kaufmann, 2005. ISBN 1-55860-866-4{{rp|p.123}}&lt;!-- for redirect from </span><span class="se">\&#39;</span><span class="s1">Saff Squeeze</span><span class="se">\&#39;</span><span class="s1"> --&gt;</span><span class="se">\n</span><span class="s1"> </span><span class="se">\&#39;\&#39;</span><span class="s1">Saff Squeeze</span><span class="se">\&#39;\&#39;</span><span class="s1">{{snd}} a technique of isolating failure within the test using progressive inlining of parts of the failing test.[http://www.threeriversinstitute.org/HitEmHighHitEmLow.html Kent Beck, Hit </span><span class="se">\&#39;</span><span class="s1">em High, Hit </span><span class="se">\&#39;</span><span class="s1">em Low: Regression Testing and the Saff Squeeze]</span><span class="se">\n\n</span><span class="s1">Debugging for embedded systems</span><span class="se">\n</span><span class="s1">In contrast to the general purpose computer software design environment, a primary characteristic of embedded environments is the sheer number of different platforms available to the developers (CPU architectures, vendors, operating systems and their variants). Embedded systems are, by definition, not general-purpose designs: they are typically developed for a single task (or small range of tasks), and the platform is chosen specifically to optimize that application. Not only does this fact make life tough for embedded system developers, it also makes debugging and testing of these systems harder as well, since different debugging tools are needed in different platforms.</span><span class="se">\n\n</span><span class="s1">to identify and fix bugs in the system (e.g. logical or synchronization problems in the code, or a design error in the hardware);</span><span class="se">\n</span><span class="s1">to collect information about the operating states of the system that may then be used to analyze the system: to find ways to boost its performance or to optimize other important characteristics (e.g. energy consumption, reliability, real-time response etc.).</span><span class="se">\n\n</span><span class="s1">Anti-debugging</span><span class="se">\n</span><span class="s1">Anti-debugging is &quot;the implementation of one or more techniques within computer code that hinders attempts at reverse engineering or debugging a target process&quot;.&lt;ref name=&quot;veracode-antidebugging&quot;&gt;{{cite web |url=http://www.veracode.com/blog/2008/12/anti-debugging-series-part-i/ |title=Anti-Debugging Series - Part I |last=Shields |first=Tyler |date=2008-12-02 |work=Veracode |accessdate=2009-03-17}} It is actively used by recognized publishers in copy protection|copy-protection schemas, but is also used by malware to complicate its detection and elimination.&lt;ref name=&quot;soft-prot&quot;&gt;[http://people.seas.harvard.edu/~mgagnon/software_protection_through_anti_debugging.pdf Software Protection through Anti-Debugging Michael N Gagnon, Stephen Taylor, Anup Ghosh] Techniques used in anti-debugging include:</span><span class="se">\n</span><span class="s1">API-based: check for the existence of a debugger using system information</span><span class="se">\n</span><span class="s1">Exception-based: check to see if exceptions are interfered with</span><span class="se">\n</span><span class="s1">Process and thread blocks: check whether process and thread blocks have been manipulated</span><span class="se">\n</span><span class="s1">Modified code: check for code modifications made by a debugger handling software breakpoints</span><span class="se">\n</span><span class="s1">Hardware- and register-based: check for hardware breakpoints and CPU registers</span><span class="se">\n</span><span class="s1">Timing and latency: check the time taken for the execution of instructions</span><span class="se">\n</span><span class="s1">Detecting and penalizing debugger&lt;ref name=&quot;soft-prot&quot; /&gt;&lt;!-- reference does not exist --&gt;</span><span class="se">\n\n</span><span class="s1">An early example of anti-debugging existed in early versions of Microsoft Word which, if a debugger was detected, produced a message that said: &quot;The tree of evil bears bitter fruit. Now trashing program disk.&quot;, after which it caused the floppy disk drive to emit alarming noises with the intent of scaring the user away from attempting it again.&lt;ref name=&quot;SecurityEngineeringRA&quot;&gt;{{cite book | url=http://www.cl.cam.ac.uk/~rja14/book.html | author=Ross J. Anderson | title=Security Engineering | isbn = 0-471-38922-6 | page=684 }}&lt;ref name=&quot;toastytech&quot;&gt;{{cite web | url=http://toastytech.com/guis/word1153.html | title=Microsoft Word for DOS 1.15}}</span><span class="se">\n</span><span class="s1">&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 斷詞</span>
+<span class="n">tokens</span> <span class="o">=</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">article</span><span class="p">)</span>
+
+<span class="c1"># 將結果轉小寫</span>
+<span class="n">lower_tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">]</span>
+
+<span class="n">lower_tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&quot;&#39;&#39;&quot;, &quot;&#39;debugging&quot;, &quot;&#39;&#39;&quot;, &quot;&#39;&quot;, &#39;is&#39;, &#39;the&#39;, &#39;process&#39;, &#39;of&#39;, &#39;finding&#39;, &#39;and&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>建立詞頻，會用到內建的 <code class="docutils literal notranslate"><span class="pre">collections.Counter()</span></code>，作法如下：</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="n">bow_simple</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">lower_tokens</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>做完的物件，是一個 counter 物件 (可以想成 dictionary 就好)，裡面就是 key-value pair (key對應到該詞，value就是詞頻)</p></li>
+<li><p>我們可以用他的 <code class="docutils literal notranslate"><span class="pre">.most_comon()</span></code> method，來找出最多的詞頻</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bow_simple</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(&#39;,&#39;, 151),
+ (&#39;the&#39;, 150),
+ (&#39;.&#39;, 89),
+ (&#39;of&#39;, 81),
+ (&quot;&#39;&#39;&quot;, 69),
+ (&#39;to&#39;, 63),
+ (&#39;a&#39;, 60),
+ (&#39;``&#39;, 47),
+ (&#39;in&#39;, 44),
+ (&#39;and&#39;, 41)]
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>可以看到，最高頻的是 <code class="docutils literal notranslate"><span class="pre">,</span></code>，出現 151 次。再來是 <code class="docutils literal notranslate"><span class="pre">the</span></code>，出現 150 次</p></li>
+<li><p>如果你很不喜歡這種格式，可以這樣轉成 pandas</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">bow_simple</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;key&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>key</th>
+      <th>value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>''</td>
+      <td>69</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>'debugging</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>'</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>is</td>
+      <td>25</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>the</td>
+      <td>150</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>953</th>
+      <td>toastytech</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>954</th>
+      <td>//toastytech.com/guis/word1153.html</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>955</th>
+      <td>title=microsoft</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>956</th>
+      <td>dos</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>957</th>
+      <td>1.15</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+<p>958 rows × 2 columns</p>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="text-preprocessing">
+<h2><span class="section-number">2.2. </span>text preprocessing<a class="headerlink" href="#text-preprocessing" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>要做出比較好的詞頻表，通常都會經過以下的前處理過程：</p>
+<ul>
+<li><p>把字體全改小寫 (用 str 的 method: <code class="docutils literal notranslate"><span class="pre">.lower()</span></code>).</p></li>
+<li><p>只取出文字(不要標點).</p></li>
+<li><p>將動詞三態, 名詞單複數全還原 (lemmatizer).</p></li>
+<li><p>排除掉 stop words.</p></li>
+</ul>
+</li>
+<li><p>以下，拿剛剛的 <code class="docutils literal notranslate"><span class="pre">article</span></code>，再做一次，但加入上述多個 preprocessing：</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;wordnet&#39;</span><span class="p">)</span>
+<span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;omw-1.4&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[nltk_data] Downloading package wordnet to /Users/hanklee/nltk_data...
+[nltk_data]   Package wordnet is already up-to-date!
+[nltk_data] Downloading package omw-1.4 to /Users/hanklee/nltk_data...
+[nltk_data]   Unzipping corpora/omw-1.4.zip.
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 斷詞</span>
+<span class="n">tokens</span> <span class="o">=</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">article</span><span class="p">)</span>
+
+<span class="c1"># 將結果轉小寫</span>
+<span class="n">lower_tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">]</span>
+
+<span class="c1"># 只留文字</span>
+<span class="n">alpha_only</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">lower_tokens</span> <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">isalpha</span><span class="p">()]</span>
+
+<span class="c1"># 移除 stop words</span>
+<span class="n">english_stops</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="s1">&#39;me&#39;</span><span class="p">,</span> <span class="s1">&#39;my&#39;</span><span class="p">,</span> <span class="s1">&#39;myself&#39;</span><span class="p">,</span> <span class="s1">&#39;we&#39;</span><span class="p">,</span> <span class="s1">&#39;our&#39;</span><span class="p">,</span> <span class="s1">&#39;ours&#39;</span><span class="p">,</span> <span class="s1">&#39;ourselves&#39;</span><span class="p">,</span> <span class="s1">&#39;you&#39;</span><span class="p">,</span> <span class="s1">&#39;your&#39;</span><span class="p">,</span> <span class="s1">&#39;yours&#39;</span><span class="p">,</span> <span class="s1">&#39;yourself&#39;</span><span class="p">,</span> <span class="s1">&#39;yourselves&#39;</span><span class="p">,</span> <span class="s1">&#39;he&#39;</span><span class="p">,</span> <span class="s1">&#39;him&#39;</span><span class="p">,</span> <span class="s1">&#39;his&#39;</span><span class="p">,</span> <span class="s1">&#39;himself&#39;</span><span class="p">,</span> <span class="s1">&#39;she&#39;</span><span class="p">,</span> <span class="s1">&#39;her&#39;</span><span class="p">,</span> <span class="s1">&#39;hers&#39;</span><span class="p">,</span> <span class="s1">&#39;herself&#39;</span><span class="p">,</span> <span class="s1">&#39;it&#39;</span><span class="p">,</span> <span class="s1">&#39;its&#39;</span><span class="p">,</span> <span class="s1">&#39;itself&#39;</span><span class="p">,</span> <span class="s1">&#39;they&#39;</span><span class="p">,</span> <span class="s1">&#39;them&#39;</span><span class="p">,</span> <span class="s1">&#39;their&#39;</span><span class="p">,</span> <span class="s1">&#39;theirs&#39;</span><span class="p">,</span> <span class="s1">&#39;themselves&#39;</span><span class="p">,</span> <span class="s1">&#39;what&#39;</span><span class="p">,</span> <span class="s1">&#39;which&#39;</span><span class="p">,</span> <span class="s1">&#39;who&#39;</span><span class="p">,</span> <span class="s1">&#39;whom&#39;</span><span class="p">,</span> <span class="s1">&#39;this&#39;</span><span class="p">,</span> <span class="s1">&#39;that&#39;</span><span class="p">,</span> <span class="s1">&#39;these&#39;</span><span class="p">,</span> <span class="s1">&#39;those&#39;</span><span class="p">,</span> <span class="s1">&#39;am&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;are&#39;</span><span class="p">,</span> <span class="s1">&#39;was&#39;</span><span class="p">,</span> <span class="s1">&#39;were&#39;</span><span class="p">,</span> <span class="s1">&#39;be&#39;</span><span class="p">,</span> <span class="s1">&#39;been&#39;</span><span class="p">,</span> <span class="s1">&#39;being&#39;</span><span class="p">,</span> <span class="s1">&#39;have&#39;</span><span class="p">,</span> <span class="s1">&#39;has&#39;</span><span class="p">,</span> <span class="s1">&#39;had&#39;</span><span class="p">,</span> <span class="s1">&#39;having&#39;</span><span class="p">,</span> <span class="s1">&#39;do&#39;</span><span class="p">,</span> <span class="s1">&#39;does&#39;</span><span class="p">,</span> <span class="s1">&#39;did&#39;</span><span class="p">,</span> <span class="s1">&#39;doing&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;an&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;and&#39;</span><span class="p">,</span> <span class="s1">&#39;but&#39;</span><span class="p">,</span> <span class="s1">&#39;if&#39;</span><span class="p">,</span> <span class="s1">&#39;or&#39;</span><span class="p">,</span> <span class="s1">&#39;because&#39;</span><span class="p">,</span> <span class="s1">&#39;as&#39;</span><span class="p">,</span> <span class="s1">&#39;until&#39;</span><span class="p">,</span> <span class="s1">&#39;while&#39;</span><span class="p">,</span> <span class="s1">&#39;of&#39;</span><span class="p">,</span> <span class="s1">&#39;at&#39;</span><span class="p">,</span> <span class="s1">&#39;by&#39;</span><span class="p">,</span> <span class="s1">&#39;for&#39;</span><span class="p">,</span> <span class="s1">&#39;with&#39;</span><span class="p">,</span> <span class="s1">&#39;about&#39;</span><span class="p">,</span> <span class="s1">&#39;against&#39;</span><span class="p">,</span> <span class="s1">&#39;between&#39;</span><span class="p">,</span> <span class="s1">&#39;into&#39;</span><span class="p">,</span> <span class="s1">&#39;through&#39;</span><span class="p">,</span> <span class="s1">&#39;during&#39;</span><span class="p">,</span> <span class="s1">&#39;before&#39;</span><span class="p">,</span> <span class="s1">&#39;after&#39;</span><span class="p">,</span> <span class="s1">&#39;above&#39;</span><span class="p">,</span> <span class="s1">&#39;below&#39;</span><span class="p">,</span> <span class="s1">&#39;to&#39;</span><span class="p">,</span> <span class="s1">&#39;from&#39;</span><span class="p">,</span> <span class="s1">&#39;up&#39;</span><span class="p">,</span> <span class="s1">&#39;down&#39;</span><span class="p">,</span> <span class="s1">&#39;in&#39;</span><span class="p">,</span> <span class="s1">&#39;out&#39;</span><span class="p">,</span> <span class="s1">&#39;on&#39;</span><span class="p">,</span> <span class="s1">&#39;off&#39;</span><span class="p">,</span> <span class="s1">&#39;over&#39;</span><span class="p">,</span> <span class="s1">&#39;under&#39;</span><span class="p">,</span> <span class="s1">&#39;again&#39;</span><span class="p">,</span> <span class="s1">&#39;further&#39;</span><span class="p">,</span> <span class="s1">&#39;then&#39;</span><span class="p">,</span> <span class="s1">&#39;once&#39;</span><span class="p">,</span> <span class="s1">&#39;here&#39;</span><span class="p">,</span> <span class="s1">&#39;there&#39;</span><span class="p">,</span> <span class="s1">&#39;when&#39;</span><span class="p">,</span> <span class="s1">&#39;where&#39;</span><span class="p">,</span> <span class="s1">&#39;why&#39;</span><span class="p">,</span> <span class="s1">&#39;how&#39;</span><span class="p">,</span> <span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="s1">&#39;any&#39;</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="s1">&#39;each&#39;</span><span class="p">,</span> <span class="s1">&#39;few&#39;</span><span class="p">,</span> <span class="s1">&#39;more&#39;</span><span class="p">,</span> <span class="s1">&#39;most&#39;</span><span class="p">,</span> <span class="s1">&#39;other&#39;</span><span class="p">,</span> <span class="s1">&#39;some&#39;</span><span class="p">,</span> <span class="s1">&#39;such&#39;</span><span class="p">,</span> <span class="s1">&#39;no&#39;</span><span class="p">,</span> <span class="s1">&#39;nor&#39;</span><span class="p">,</span> <span class="s1">&#39;not&#39;</span><span class="p">,</span> <span class="s1">&#39;only&#39;</span><span class="p">,</span> <span class="s1">&#39;own&#39;</span><span class="p">,</span> <span class="s1">&#39;same&#39;</span><span class="p">,</span> <span class="s1">&#39;so&#39;</span><span class="p">,</span> <span class="s1">&#39;than&#39;</span><span class="p">,</span> <span class="s1">&#39;too&#39;</span><span class="p">,</span> <span class="s1">&#39;very&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;can&#39;</span><span class="p">,</span> <span class="s1">&#39;will&#39;</span><span class="p">,</span> <span class="s1">&#39;just&#39;</span><span class="p">,</span> <span class="s1">&#39;don&#39;</span><span class="p">,</span> <span class="s1">&#39;should&#39;</span><span class="p">,</span> <span class="s1">&#39;now&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;ll&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="s1">&#39;re&#39;</span><span class="p">,</span> <span class="s1">&#39;ve&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;ain&#39;</span><span class="p">,</span> <span class="s1">&#39;aren&#39;</span><span class="p">,</span> <span class="s1">&#39;couldn&#39;</span><span class="p">,</span> <span class="s1">&#39;didn&#39;</span><span class="p">,</span> <span class="s1">&#39;doesn&#39;</span><span class="p">,</span> <span class="s1">&#39;hadn&#39;</span><span class="p">,</span> <span class="s1">&#39;hasn&#39;</span><span class="p">,</span> <span class="s1">&#39;haven&#39;</span><span class="p">,</span> <span class="s1">&#39;isn&#39;</span><span class="p">,</span> <span class="s1">&#39;ma&#39;</span><span class="p">,</span> <span class="s1">&#39;mightn&#39;</span><span class="p">,</span> <span class="s1">&#39;mustn&#39;</span><span class="p">,</span> <span class="s1">&#39;needn&#39;</span><span class="p">,</span> <span class="s1">&#39;shan&#39;</span><span class="p">,</span> <span class="s1">&#39;shouldn&#39;</span><span class="p">,</span> <span class="s1">&#39;wasn&#39;</span><span class="p">,</span> <span class="s1">&#39;weren&#39;</span><span class="p">,</span> <span class="s1">&#39;won&#39;</span><span class="p">,</span> <span class="s1">&#39;wouldn&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">]</span>
+<span class="n">no_stops</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">alpha_only</span> <span class="k">if</span> <span class="n">t</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">english_stops</span><span class="p">]</span>
+
+<span class="c1"># 將動詞三態, 名詞單複數全還原 (lemmatizer)</span>
+<span class="kn">from</span> <span class="nn">nltk.stem</span> <span class="kn">import</span> <span class="n">WordNetLemmatizer</span>
+<span class="n">wordnet_lemmatizer</span> <span class="o">=</span> <span class="n">WordNetLemmatizer</span><span class="p">()</span>
+<span class="n">lemmatized</span> <span class="o">=</span> <span class="p">[</span><span class="n">wordnet_lemmatizer</span><span class="o">.</span><span class="n">lemmatize</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">no_stops</span><span class="p">]</span>
+
+<span class="c1"># 建立 bag-of-words</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="n">bow</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">lemmatized</span><span class="p">)</span>
+
+<span class="c1"># print 出最高頻的 10 個字</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">bow</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(&#39;debugging&#39;, 39), (&#39;system&#39;, 25), (&#39;bug&#39;, 17), (&#39;software&#39;, 16), (&#39;problem&#39;, 15), (&#39;tool&#39;, 15), (&#39;computer&#39;, 14), (&#39;process&#39;, 13), (&#39;term&#39;, 13), (&#39;debugger&#39;, 13)]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="intro-to-gensim">
+<h2><span class="section-number">2.3. </span>intro to <code class="docutils literal notranslate"><span class="pre">gensim</span></code><a class="headerlink" href="#intro-to-gensim" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">gensim</span></code> 是一個 popular open-source NLP library.</p></li>
+<li><p>他可以做到：</p>
+<ul>
+<li><p>building document or word vectors.</p></li>
+<li><p>performing topic identification and document comparison.</p></li>
+</ul>
+</li>
+</ul>
+<div class="section" id="id1">
+<h3><span class="section-number">2.3.1. </span>範例資料<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>先來個範例資料：在 <code class="docutils literal notranslate"><span class="pre">data/Wikipedia</span> <span class="pre">articles</span></code> 裡面，有 12 個檔案 (12篇文章)</p></li>
+<li><p>我把每個文章打開後，斷詞與前處理，再存到 list 裡：</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="n">wiki_files</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;data/Wikipedia articles&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">text_preprocessing</span><span class="p">(</span><span class="n">doc</span><span class="p">):</span>
+    <span class="c1"># 斷詞</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span>
+
+    <span class="c1"># 將結果轉小寫</span>
+    <span class="n">lower_tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">]</span>
+
+    <span class="c1"># 只留文字</span>
+    <span class="n">alpha_only</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">lower_tokens</span> <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">isalpha</span><span class="p">()]</span>
+
+    <span class="c1"># 移除 stop words</span>
+    <span class="n">english_stops</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="s1">&#39;me&#39;</span><span class="p">,</span> <span class="s1">&#39;my&#39;</span><span class="p">,</span> <span class="s1">&#39;myself&#39;</span><span class="p">,</span> <span class="s1">&#39;we&#39;</span><span class="p">,</span> <span class="s1">&#39;our&#39;</span><span class="p">,</span> <span class="s1">&#39;ours&#39;</span><span class="p">,</span> <span class="s1">&#39;ourselves&#39;</span><span class="p">,</span> <span class="s1">&#39;you&#39;</span><span class="p">,</span> <span class="s1">&#39;your&#39;</span><span class="p">,</span> <span class="s1">&#39;yours&#39;</span><span class="p">,</span> <span class="s1">&#39;yourself&#39;</span><span class="p">,</span> <span class="s1">&#39;yourselves&#39;</span><span class="p">,</span> <span class="s1">&#39;he&#39;</span><span class="p">,</span> <span class="s1">&#39;him&#39;</span><span class="p">,</span> <span class="s1">&#39;his&#39;</span><span class="p">,</span> <span class="s1">&#39;himself&#39;</span><span class="p">,</span> <span class="s1">&#39;she&#39;</span><span class="p">,</span> <span class="s1">&#39;her&#39;</span><span class="p">,</span> <span class="s1">&#39;hers&#39;</span><span class="p">,</span> <span class="s1">&#39;herself&#39;</span><span class="p">,</span> <span class="s1">&#39;it&#39;</span><span class="p">,</span> <span class="s1">&#39;its&#39;</span><span class="p">,</span> <span class="s1">&#39;itself&#39;</span><span class="p">,</span> <span class="s1">&#39;they&#39;</span><span class="p">,</span> <span class="s1">&#39;them&#39;</span><span class="p">,</span> <span class="s1">&#39;their&#39;</span><span class="p">,</span> <span class="s1">&#39;theirs&#39;</span><span class="p">,</span> <span class="s1">&#39;themselves&#39;</span><span class="p">,</span> <span class="s1">&#39;what&#39;</span><span class="p">,</span> <span class="s1">&#39;which&#39;</span><span class="p">,</span> <span class="s1">&#39;who&#39;</span><span class="p">,</span> <span class="s1">&#39;whom&#39;</span><span class="p">,</span> <span class="s1">&#39;this&#39;</span><span class="p">,</span> <span class="s1">&#39;that&#39;</span><span class="p">,</span> <span class="s1">&#39;these&#39;</span><span class="p">,</span> <span class="s1">&#39;those&#39;</span><span class="p">,</span> <span class="s1">&#39;am&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;are&#39;</span><span class="p">,</span> <span class="s1">&#39;was&#39;</span><span class="p">,</span> <span class="s1">&#39;were&#39;</span><span class="p">,</span> <span class="s1">&#39;be&#39;</span><span class="p">,</span> <span class="s1">&#39;been&#39;</span><span class="p">,</span> <span class="s1">&#39;being&#39;</span><span class="p">,</span> <span class="s1">&#39;have&#39;</span><span class="p">,</span> <span class="s1">&#39;has&#39;</span><span class="p">,</span> <span class="s1">&#39;had&#39;</span><span class="p">,</span> <span class="s1">&#39;having&#39;</span><span class="p">,</span> <span class="s1">&#39;do&#39;</span><span class="p">,</span> <span class="s1">&#39;does&#39;</span><span class="p">,</span> <span class="s1">&#39;did&#39;</span><span class="p">,</span> <span class="s1">&#39;doing&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;an&#39;</span><span class="p">,</span> <span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;and&#39;</span><span class="p">,</span> <span class="s1">&#39;but&#39;</span><span class="p">,</span> <span class="s1">&#39;if&#39;</span><span class="p">,</span> <span class="s1">&#39;or&#39;</span><span class="p">,</span> <span class="s1">&#39;because&#39;</span><span class="p">,</span> <span class="s1">&#39;as&#39;</span><span class="p">,</span> <span class="s1">&#39;until&#39;</span><span class="p">,</span> <span class="s1">&#39;while&#39;</span><span class="p">,</span> <span class="s1">&#39;of&#39;</span><span class="p">,</span> <span class="s1">&#39;at&#39;</span><span class="p">,</span> <span class="s1">&#39;by&#39;</span><span class="p">,</span> <span class="s1">&#39;for&#39;</span><span class="p">,</span> <span class="s1">&#39;with&#39;</span><span class="p">,</span> <span class="s1">&#39;about&#39;</span><span class="p">,</span> <span class="s1">&#39;against&#39;</span><span class="p">,</span> <span class="s1">&#39;between&#39;</span><span class="p">,</span> <span class="s1">&#39;into&#39;</span><span class="p">,</span> <span class="s1">&#39;through&#39;</span><span class="p">,</span> <span class="s1">&#39;during&#39;</span><span class="p">,</span> <span class="s1">&#39;before&#39;</span><span class="p">,</span> <span class="s1">&#39;after&#39;</span><span class="p">,</span> <span class="s1">&#39;above&#39;</span><span class="p">,</span> <span class="s1">&#39;below&#39;</span><span class="p">,</span> <span class="s1">&#39;to&#39;</span><span class="p">,</span> <span class="s1">&#39;from&#39;</span><span class="p">,</span> <span class="s1">&#39;up&#39;</span><span class="p">,</span> <span class="s1">&#39;down&#39;</span><span class="p">,</span> <span class="s1">&#39;in&#39;</span><span class="p">,</span> <span class="s1">&#39;out&#39;</span><span class="p">,</span> <span class="s1">&#39;on&#39;</span><span class="p">,</span> <span class="s1">&#39;off&#39;</span><span class="p">,</span> <span class="s1">&#39;over&#39;</span><span class="p">,</span> <span class="s1">&#39;under&#39;</span><span class="p">,</span> <span class="s1">&#39;again&#39;</span><span class="p">,</span> <span class="s1">&#39;further&#39;</span><span class="p">,</span> <span class="s1">&#39;then&#39;</span><span class="p">,</span> <span class="s1">&#39;once&#39;</span><span class="p">,</span> <span class="s1">&#39;here&#39;</span><span class="p">,</span> <span class="s1">&#39;there&#39;</span><span class="p">,</span> <span class="s1">&#39;when&#39;</span><span class="p">,</span> <span class="s1">&#39;where&#39;</span><span class="p">,</span> <span class="s1">&#39;why&#39;</span><span class="p">,</span> <span class="s1">&#39;how&#39;</span><span class="p">,</span> <span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="s1">&#39;any&#39;</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="s1">&#39;each&#39;</span><span class="p">,</span> <span class="s1">&#39;few&#39;</span><span class="p">,</span> <span class="s1">&#39;more&#39;</span><span class="p">,</span> <span class="s1">&#39;most&#39;</span><span class="p">,</span> <span class="s1">&#39;other&#39;</span><span class="p">,</span> <span class="s1">&#39;some&#39;</span><span class="p">,</span> <span class="s1">&#39;such&#39;</span><span class="p">,</span> <span class="s1">&#39;no&#39;</span><span class="p">,</span> <span class="s1">&#39;nor&#39;</span><span class="p">,</span> <span class="s1">&#39;not&#39;</span><span class="p">,</span> <span class="s1">&#39;only&#39;</span><span class="p">,</span> <span class="s1">&#39;own&#39;</span><span class="p">,</span> <span class="s1">&#39;same&#39;</span><span class="p">,</span> <span class="s1">&#39;so&#39;</span><span class="p">,</span> <span class="s1">&#39;than&#39;</span><span class="p">,</span> <span class="s1">&#39;too&#39;</span><span class="p">,</span> <span class="s1">&#39;very&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;can&#39;</span><span class="p">,</span> <span class="s1">&#39;will&#39;</span><span class="p">,</span> <span class="s1">&#39;just&#39;</span><span class="p">,</span> <span class="s1">&#39;don&#39;</span><span class="p">,</span> <span class="s1">&#39;should&#39;</span><span class="p">,</span> <span class="s1">&#39;now&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;ll&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="s1">&#39;re&#39;</span><span class="p">,</span> <span class="s1">&#39;ve&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;ain&#39;</span><span class="p">,</span> <span class="s1">&#39;aren&#39;</span><span class="p">,</span> <span class="s1">&#39;couldn&#39;</span><span class="p">,</span> <span class="s1">&#39;didn&#39;</span><span class="p">,</span> <span class="s1">&#39;doesn&#39;</span><span class="p">,</span> <span class="s1">&#39;hadn&#39;</span><span class="p">,</span> <span class="s1">&#39;hasn&#39;</span><span class="p">,</span> <span class="s1">&#39;haven&#39;</span><span class="p">,</span> <span class="s1">&#39;isn&#39;</span><span class="p">,</span> <span class="s1">&#39;ma&#39;</span><span class="p">,</span> <span class="s1">&#39;mightn&#39;</span><span class="p">,</span> <span class="s1">&#39;mustn&#39;</span><span class="p">,</span> <span class="s1">&#39;needn&#39;</span><span class="p">,</span> <span class="s1">&#39;shan&#39;</span><span class="p">,</span> <span class="s1">&#39;shouldn&#39;</span><span class="p">,</span> <span class="s1">&#39;wasn&#39;</span><span class="p">,</span> <span class="s1">&#39;weren&#39;</span><span class="p">,</span> <span class="s1">&#39;won&#39;</span><span class="p">,</span> <span class="s1">&#39;wouldn&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">]</span>
+    <span class="n">no_stops</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">alpha_only</span> <span class="k">if</span> <span class="n">t</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">english_stops</span><span class="p">]</span>
+    
+    <span class="k">return</span> <span class="n">no_stops</span>
+
+<span class="n">articles</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">wiki_files</span><span class="p">:</span>    
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;data/Wikipedia articles/&quot;</span><span class="o">+</span><span class="n">i</span><span class="p">,</span> <span class="s2">&quot;r+&quot;</span><span class="p">,</span> <span class="n">encoding</span> <span class="o">=</span> <span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">doc</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">articles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">text_preprocessing</span><span class="p">(</span><span class="n">doc</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>來看一下第 12 篇文章，斷完詞後，前 10 個字是哪些：</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">articles</span><span class="p">[</span><span class="mi">11</span><span class="p">][</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;uses&#39;,
+ &#39;file&#39;,
+ &#39;operating&#39;,
+ &#39;system&#39;,
+ &#39;placement&#39;,
+ &#39;software&#39;,
+ &#39;diagram&#39;,
+ &#39;showing&#39;,
+ &#39;user&#39;,
+ &#39;computing&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id-vs-token">
+<h3><span class="section-number">2.3.2. </span>id vs token 對應表<a class="headerlink" href="#id-vs-token" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>有了 <code class="docutils literal notranslate"><span class="pre">articles</span></code> 這種資料格式後 (兩層的 list)，就可以餵到 gensim 的 <code class="docutils literal notranslate"><span class="pre">Dictionary</span></code> 裡面，做出 id vs token 的對應表：</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">gensim.corpora.dictionary</span> <span class="kn">import</span> <span class="n">Dictionary</span>
+<span class="n">dictionary</span> <span class="o">=</span> <span class="n">Dictionary</span><span class="p">(</span><span class="n">articles</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>這個字典，是一個 iterator 物件，直接打開看不到東西：</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dictionary</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;gensim.corpora.dictionary.Dictionary at 0x138a35e80&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>我們用迴圈解開來看的話，前10筆長這樣：</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">dictionary</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">key</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; -- &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0 -- abandon
+1 -- able
+2 -- abstract
+3 -- abuse
+4 -- access
+5 -- accidentally
+6 -- accompanying
+7 -- accomplish
+8 -- according
+9 -- account
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>可以得知，這個 dictionary 是 {“id”: “token”} 這種組合。</p></li>
+<li><p>所以我如果想輸入 id ，查他是哪個字，我可以這樣做：</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dictionary</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;able&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>反過來，我如果知道字，想知道他的 id 呢？ 那要用 <code class="docutils literal notranslate"><span class="pre">dictionary.token2id</span></code> 這個 attribute</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dictionary</span><span class="o">.</span><span class="n">token2id</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;abandon&#39;: 0,
+ &#39;able&#39;: 1,
+ &#39;abstract&#39;: 2,
+ &#39;abuse&#39;: 3,
+ &#39;access&#39;: 4,
+ &#39;accidentally&#39;: 5,
+ &#39;accompanying&#39;: 6,
+ &#39;accomplish&#39;: 7,
+ &#39;according&#39;: 8,
+ &#39;account&#39;: 9,
+ &#39;accurately&#39;: 10,
+ &#39;acknowledged&#39;: 11,
+ &#39;across&#39;: 12,
+ &#39;act&#39;: 13,
+ &#39;action&#39;: 14,
+ &#39;actions&#39;: 15,
+ &#39;active&#39;: 16,
+ &#39;activity&#39;: 17,
+ &#39;actual&#39;: 18,
+ &#39;actually&#39;: 19,
+ &#39;ada&#39;: 20,
+ &#39;adam&#39;: 21,
+ &#39;adaptation&#39;: 22,
+ &#39;added&#39;: 23,
+ &#39;address&#39;: 24,
+ &#39;addresses&#39;: 25,
+ &#39;admiral&#39;: 26,
+ &#39;advertised&#39;: 27,
+ &#39;advertisement&#39;: 28,
+ &#39;aeronautical&#39;: 29,
+ &#39;affect&#39;: 30,
+ &#39;affects&#39;: 31,
+ &#39;agency&#39;: 32,
+ &#39;agile&#39;: 33,
+ &#39;aid&#39;: 34,
+ &#39;aids&#39;: 35,
+ &#39;air&#39;: 36,
+ &#39;aircraft&#39;: 37,
+ &#39;algorithm&#39;: 38,
+ &#39;algorithms&#39;: 39,
+ &#39;allen&#39;: 40,
+ &#39;allocated&#39;: 41,
+ &#39;allocation&#39;: 42,
+ &#39;allow&#39;: 43,
+ &#39;allows&#39;: 44,
+ &#39;almost&#39;: 45,
+ &#39;alphabetize&#39;: 46,
+ &#39;already&#39;: 47,
+ &#39;also&#39;: 48,
+ &#39;alt&#39;: 49,
+ &#39;although&#39;: 50,
+ &#39;always&#39;: 51,
+ &#39;america&#39;: 52,
+ &#39;american&#39;: 53,
+ &#39;amount&#39;: 54,
+ &#39;amounts&#39;: 55,
+ &#39;amusedly&#39;: 56,
+ &#39;analysing&#39;: 57,
+ &#39;analysis&#39;: 58,
+ &#39;analyst&#39;: 59,
+ &#39;analytical&#39;: 60,
+ &#39;anatomy&#39;: 61,
+ &#39;ann&#39;: 62,
+ &#39;annals&#39;: 63,
+ &#39;annually&#39;: 64,
+ &#39;anomalies&#39;: 65,
+ &#39;another&#39;: 66,
+ &#39;answered&#39;: 67,
+ &#39;anticipate&#39;: 68,
+ &#39;anyone&#39;: 69,
+ &#39;anything&#39;: 70,
+ &#39;api&#39;: 71,
+ &#39;apparently&#39;: 72,
+ &#39;appear&#39;: 73,
+ &#39;appears&#39;: 74,
+ &#39;application&#39;: 75,
+ &#39;applications&#39;: 76,
+ &#39;applies&#39;: 77,
+ &#39;april&#39;: 78,
+ &#39;area&#39;: 79,
+ &#39;argument&#39;: 80,
+ &#39;ariane&#39;: 81,
+ &#39;arise&#39;: 82,
+ &#39;arisen&#39;: 83,
+ &#39;arising&#39;: 84,
+ &#39;arithmetic&#39;: 85,
+ &#39;arlen&#39;: 86,
+ &#39;arose&#39;: 87,
+ &#39;around&#39;: 88,
+ &#39;arrays&#39;: 89,
+ &#39;art&#39;: 90,
+ &#39;asimov&#39;: 91,
+ &#39;assertion&#39;: 92,
+ &#39;assessment&#39;: 93,
+ &#39;assigning&#39;: 94,
+ &#39;assignment&#39;: 95,
+ &#39;assigns&#39;: 96,
+ &#39;assist&#39;: 97,
+ &#39;associate&#39;: 98,
+ &#39;assume&#39;: 99,
+ &#39;assumptions&#39;: 100,
+ &#39;assurance&#39;: 101,
+ &#39;astray&#39;: 102,
+ &#39;attached&#39;: 103,
+ &#39;attempt&#39;: 104,
+ &#39;attempted&#39;: 105,
+ &#39;attempts&#39;: 106,
+ &#39;attestation&#39;: 107,
+ &#39;august&#39;: 108,
+ &#39;authors&#39;: 109,
+ &#39;automated&#39;: 110,
+ &#39;automotive&#39;: 111,
+ &#39;b&#39;: 112,
+ &#39;babbage&#39;: 113,
+ &#39;back&#39;: 114,
+ &#39;backfires&#39;: 115,
+ &#39;backward&#39;: 116,
+ &#39;baffle&#39;: 117,
+ &#39;ball&#39;: 118,
+ &#39;bank&#39;: 119,
+ &#39;banking&#39;: 120,
+ &#39;base&#39;: 121,
+ &#39;basics&#39;: 122,
+ &#39;basis&#39;: 123,
+ &#39;bazaar&#39;: 124,
+ &#39;become&#39;: 125,
+ &#39;becomes&#39;: 126,
+ &#39;beginner&#39;: 127,
+ &#39;begins&#39;: 128,
+ &#39;behave&#39;: 129,
+ &#39;behavior&#39;: 130,
+ &#39;belonging&#39;: 131,
+ &#39;best&#39;: 132,
+ &#39;better&#39;: 133,
+ &#39;beyond&#39;: 134,
+ &#39;big&#39;: 135,
+ &#39;bill&#39;: 136,
+ &#39;billion&#39;: 137,
+ &#39;bills&#39;: 138,
+ &#39;bit&#39;: 139,
+ &#39;black&#39;: 140,
+ &#39;blames&#39;: 141,
+ &#39;blocker&#39;: 142,
+ &#39;blockquote&#39;: 143,
+ &#39;blunder&#39;: 144,
+ &#39;book&#39;: 145,
+ &#39;books&#39;: 146,
+ &#39;bottleneck&#39;: 147,
+ &#39;bounds&#39;: 148,
+ &#39;bounty&#39;: 149,
+ &#39;breaking&#39;: 150,
+ &#39;brought&#39;: 151,
+ &#39;browser&#39;: 152,
+ &#39;buffer&#39;: 153,
+ &#39;bug&#39;: 154,
+ &#39;bugbear&#39;: 155,
+ &#39;bugge&#39;: 156,
+ &#39;buggy&#39;: 157,
+ &#39;bugs&#39;: 158,
+ &#39;build&#39;: 159,
+ &#39;burke&#39;: 160,
+ &#39;burst&#39;: 161,
+ &#39;business&#39;: 162,
+ &#39;button&#39;: 163,
+ &#39;bypass&#39;: 164,
+ &#39;byron&#39;: 165,
+ &#39;ca&#39;: 166,
+ &#39;call&#39;: 167,
+ &#39;called&#39;: 168,
+ &#39;calls&#39;: 169,
+ &#39;canadian&#39;: 170,
+ &#39;capabilities&#39;: 171,
+ &#39;capital&#39;: 172,
+ &#39;cards&#39;: 173,
+ &#39;carefully&#39;: 174,
+ &#39;carriers&#39;: 175,
+ &#39;case&#39;: 176,
+ &#39;cases&#39;: 177,
+ &#39;catch&#39;: 178,
+ &#39;categories&#39;: 179,
+ &#39;categorizing&#39;: 180,
+ &#39;category&#39;: 181,
+ &#39;cathedral&#39;: 182,
+ &#39;cause&#39;: 183,
+ &#39;caused&#39;: 184,
+ &#39;causes&#39;: 185,
+ &#39;causing&#39;: 186,
+ &#39;ceiling&#39;: 187,
+ &#39;center&#39;: 188,
+ &#39;century&#39;: 189,
+ &#39;certain&#39;: 190,
+ &#39;certainly&#39;: 191,
+ &#39;chance&#39;: 192,
+ &#39;change&#39;: 193,
+ &#39;changes&#39;: 194,
+ &#39;chaos&#39;: 195,
+ &#39;charles&#39;: 196,
+ &#39;cheaper&#39;: 197,
+ &#39;check&#39;: 198,
+ &#39;checking&#39;: 199,
+ &#39;chinook&#39;: 200,
+ &#39;citation&#39;: 201,
+ &#39;cite&#39;: 202,
+ &#39;cited&#39;: 203,
+ &#39;civil&#39;: 204,
+ &#39;classes&#39;: 205,
+ &#39;classification&#39;: 206,
+ &#39;classifies&#39;: 207,
+ &#39;classpath&#39;: 208,
+ &#39;cleanup&#39;: 209,
+ &#39;co&#39;: 210,
+ &#39;code&#39;: 211,
+ &#39;coded&#39;: 212,
+ &#39;coder&#39;: 213,
+ &#39;coding&#39;: 214,
+ &#39;coining&#39;: 215,
+ &#39;collapse&#39;: 216,
+ &#39;collection&#39;: 217,
+ &#39;combat&#39;: 218,
+ &#39;combination&#39;: 219,
+ &#39;combinatorial&#39;: 220,
+ &#39;comedy&#39;: 221,
+ &#39;comes&#39;: 222,
+ &#39;comments&#39;: 223,
+ &#39;commerce&#39;: 224,
+ &#39;commercial&#39;: 225,
+ &#39;commissioned&#39;: 226,
+ &#39;committed&#39;: 227,
+ &#39;commodity&#39;: 228,
+ &#39;common&#39;: 229,
+ &#39;commonly&#39;: 230,
+ &#39;communications&#39;: 231,
+ &#39;companies&#39;: 232,
+ &#39;company&#39;: 233,
+ &#39;compatibility&#39;: 234,
+ &#39;compiled&#39;: 235,
+ &#39;compiler&#39;: 236,
+ &#39;compilers&#39;: 237,
+ &#39;complete&#39;: 238,
+ &#39;completely&#39;: 239,
+ &#39;completing&#39;: 240,
+ &#39;complex&#39;: 241,
+ &#39;complexity&#39;: 242,
+ &#39;components&#39;: 243,
+ &#39;comprehensive&#39;: 244,
+ &#39;computation&#39;: 245,
+ &#39;computer&#39;: 246,
+ &#39;computers&#39;: 247,
+ &#39;computing&#39;: 248,
+ &#39;concept&#39;: 249,
+ &#39;conceptual&#39;: 250,
+ &#39;concluded&#39;: 251,
+ &#39;concurrency&#39;: 252,
+ &#39;concurrent&#39;: 253,
+ &#39;condition&#39;: 254,
+ &#39;conducting&#39;: 255,
+ &#39;confirmed&#39;: 256,
+ &#39;conflict&#39;: 257,
+ &#39;conflicting&#39;: 258,
+ &#39;confusion&#39;: 259,
+ &#39;congress&#39;: 260,
+ &#39;connections&#39;: 261,
+ &#39;consider&#39;: 262,
+ &#39;considered&#39;: 263,
+ &#39;considering&#39;: 264,
+ &#39;console&#39;: 265,
+ &#39;constant&#39;: 266,
+ &#39;contain&#39;: 267,
+ &#39;containing&#39;: 268,
+ &#39;contains&#39;: 269,
+ &#39;context&#39;: 270,
+ &#39;continue&#39;: 271,
+ &#39;continued&#39;: 272,
+ &#39;control&#39;: 273,
+ &#39;controls&#39;: 274,
+ &#39;converting&#39;: 275,
+ &#39;convinced&#39;: 276,
+ &#39;coordinating&#39;: 277,
+ &#39;copyright&#39;: 278,
+ &#39;correct&#39;: 279,
+ &#39;corrected&#39;: 280,
+ &#39;correcting&#39;: 281,
+ &#39;correctly&#39;: 282,
+ &#39;cost&#39;: 283,
+ &#39;costly&#39;: 284,
+ &#39;could&#39;: 285,
+ &#39;counting&#39;: 286,
+ &#39;counts&#39;: 287,
+ &#39;crash&#39;: 288,
+ &#39;crashes&#39;: 289,
+ &#39;create&#39;: 290,
+ &#39;creator&#39;: 291,
+ &#39;crew&#39;: 292,
+ &#39;crime&#39;: 293,
+ &#39;criminalize&#39;: 294,
+ &#39;critical&#39;: 295,
+ &#39;culture&#39;: 296,
+ &#39;currently&#39;: 297,
+ &#39;customer&#39;: 298,
+ &#39;customers&#39;: 299,
+ &#39;cutting&#39;: 300,
+ &#39;cyber&#39;: 301,
+ &#39;cycle&#39;: 302,
+ &#39;dahlgren&#39;: 303,
+ &#39;damage&#39;: 304,
+ &#39;darling&#39;: 305,
+ &#39;data&#39;: 306,
+ &#39;database&#39;: 307,
+ &#39;date&#39;: 308,
+ &#39;dates&#39;: 309,
+ &#39;davis&#39;: 310,
+ &#39;days&#39;: 311,
+ &#39;dead&#39;: 312,
+ &#39;deadline&#39;: 313,
+ &#39;deadlock&#39;: 314,
+ &#39;dear&#39;: 315,
+ &#39;death&#39;: 316,
+ &#39;deaths&#39;: 317,
+ &#39;debate&#39;: 318,
+ &#39;debian&#39;: 319,
+ &#39;debug&#39;: 320,
+ &#39;debugger&#39;: 321,
+ &#39;debuggers&#39;: 322,
+ &#39;debugging&#39;: 323,
+ &#39;decades&#39;: 324,
+ &#39;decided&#39;: 325,
+ &#39;decimal&#39;: 326,
+ &#39;defect&#39;: 327,
+ &#39;defective&#39;: 328,
+ &#39;defects&#39;: 329,
+ &#39;defensive&#39;: 330,
+ &#39;deferred&#39;: 331,
+ &#39;defines&#39;: 332,
+ &#39;defining&#39;: 333,
+ &#39;delete&#39;: 334,
+ &#39;deliberate&#39;: 335,
+ &#39;department&#39;: 336,
+ &#39;deployment&#39;: 337,
+ &#39;dereference&#39;: 338,
+ &#39;describe&#39;: 339,
+ &#39;described&#39;: 340,
+ &#39;design&#39;: 341,
+ &#39;designed&#39;: 342,
+ &#39;destroyed&#39;: 343,
+ &#39;detect&#39;: 344,
+ &#39;detrimental&#39;: 345,
+ &#39;developed&#39;: 346,
+ &#39;developer&#39;: 347,
+ &#39;developers&#39;: 348,
+ &#39;developing&#39;: 349,
+ &#39;development&#39;: 350,
+ &#39;device&#39;: 351,
+ &#39;dickinson&#39;: 352,
+ &#39;dictionary&#39;: 353,
+ &#39;differ&#39;: 354,
+ &#39;differences&#39;: 355,
+ &#39;different&#39;: 356,
+ &#39;difficult&#39;: 357,
+ &#39;difficulties&#39;: 358,
+ &#39;digest&#39;: 359,
+ &#39;digital&#39;: 360,
+ &#39;directly&#39;: 361,
+ &#39;disappear&#39;: 362,
+ &#39;disaster&#39;: 363,
+ &#39;disclose&#39;: 364,
+ &#39;disclosure&#39;: 365,
+ &#39;discover&#39;: 366,
+ &#39;discovery&#39;: 367,
+ &#39;disk&#39;: 368,
+ &#39;dismissed&#39;: 369,
+ &#39;displaced&#39;: 370,
+ &#39;disputed&#39;: 371,
+ &#39;disruption&#39;: 372,
+ &#39;distinguish&#39;: 373,
+ &#39;distribute&#39;: 374,
+ &#39;division&#39;: 375,
+ &#39;divorced&#39;: 376,
+ &#39;documentation&#39;: 377,
+ &#39;documenting&#39;: 378,
+ &#39;dollar&#39;: 379,
+ &#39;domain&#39;: 380,
+ &#39;domestic&#39;: 381,
+ &#39;done&#39;: 382,
+ &#39;dorota&#39;: 383,
+ &#39;double&#39;: 384,
+ &#39;dozen&#39;: 385,
+ &#39;due&#39;: 386,
+ &#39;duplicate&#39;: 387,
+ &#39;duty&#39;: 388,
+ &#39;early&#39;: 389,
+ &#39;easier&#39;: 390,
+ &#39;easily&#39;: 391,
+ &#39;easy&#39;: 392,
+ &#39;economic&#39;: 393,
+ &#39;economy&#39;: 394,
+ &#39;edison&#39;: 395,
+ &#39;editing&#39;: 396,
+ &#39;effects&#39;: 397,
+ &#39;effort&#39;: 398,
+ &#39;either&#39;: 399,
+ &#39;electromechanical&#39;: 400,
+ &#39;electronic&#39;: 401,
+ &#39;element&#39;: 402,
+ &#39;elias&#39;: 403,
+ &#39;eliminate&#39;: 404,
+ &#39;eliminated&#39;: 405,
+ &#39;ellen&#39;: 406,
+ &#39;elusive&#39;: 407,
+ &#39;email&#39;: 408,
+ &#39;embedded&#39;: 409,
+ &#39;emphasize&#39;: 410,
+ &#39;employees&#39;: 411,
+ &#39;employs&#39;: 412,
+ &#39;enable&#39;: 413,
+ &#39;end&#39;: 414,
+ &#39;engage&#39;: 415,
+ &#39;engine&#39;: 416,
+ &#39;engineering&#39;: 417,
+ &#39;engines&#39;: 418,
+ &#39;english&#39;: 419,
+ &#39;enhancement&#39;: 420,
+ &#39;enough&#39;: 421,
+ &#39;entered&#39;: 422,
+ &#39;enthusiasm&#39;: 423,
+ &#39;entire&#39;: 424,
+ &#39;entry&#39;: 425,
+ &#39;enumeration&#39;: 426,
+ &#39;epics&#39;: 427,
+ &#39;equally&#39;: 428,
+ &#39;eric&#39;: 429,
+ &#39;erroneous&#39;: 430,
+ &#39;error&#39;: 431,
+ &#39;errors&#39;: 432,
+ &#39;especially&#39;: 433,
+ &#39;estimate&#39;: 434,
+ &#39;estimated&#39;: 435,
+ &#39;etc&#39;: 436,
+ &#39;etymology&#39;: 437,
+ &#39;european&#39;: 438,
+ &#39;even&#39;: 439,
+ &#39;events&#39;: 440,
+ &#39;eventually&#39;: 441,
+ &#39;ever&#39;: 442,
+ &#39;every&#39;: 443,
+ &#39;evidence&#39;: 444,
+ &#39;evolution&#39;: 445,
+ &#39;exact&#39;: 446,
+ &#39;examine&#39;: 447,
+ &#39;example&#39;: 448,
+ &#39;examples&#39;: 449,
+ &#39;exceptions&#39;: 450,
+ &#39;excessive&#39;: 451,
+ &#39;exclude&#39;: 452,
+ &#39;exclusions&#39;: 453,
+ &#39;executing&#39;: 454,
+ &#39;execution&#39;: 455,
+ &#39;exhausted&#39;: 456,
+ &#39;existing&#39;: 457,
+ &#39;expected&#39;: 458,
+ &#39;expense&#39;: 459,
+ &#39;experimentation&#39;: 460,
+ &#39;expert&#39;: 461,
+ &#39;experts&#39;: 462,
+ &#39;explicitly&#39;: 463,
+ &#39;exploit&#39;: 464,
+ &#39;explosion&#39;: 465,
+ &#39;exposes&#39;: 466,
+ &#39;extensions&#39;: 467,
+ &#39;external&#39;: 468,
+ &#39;eyeballs&#39;: 469,
+ &#39;fact&#39;: 470,
+ &#39;faculty&#39;: 471,
+ &#39;fail&#39;: 472,
+ &#39;fails&#39;: 473,
+ &#39;failure&#39;: 474,
+ &#39;failures&#39;: 475,
+ &#39;falls&#39;: 476,
+ &#39;familiar&#39;: 477,
+ &#39;family&#39;: 478,
+ &#39;famous&#39;: 479,
+ &#39;far&#39;: 480,
+ &#39;faster&#39;: 481,
+ &#39;fault&#39;: 482,
+ &#39;faults&#39;: 483,
+ &#39;faulty&#39;: 484,
+ &#39;favor&#39;: 485,
+ &#39;feared&#39;: 486,
+ &#39;feasible&#39;: 487,
+ &#39;feature&#39;: 488,
+ &#39;features&#39;: 489,
+ &#39;featuring&#39;: 490,
+ &#39;feedback&#39;: 491,
+ &#39;felt&#39;: 492,
+ &#39;fewer&#39;: 493,
+ &#39;field&#39;: 494,
+ &#39;file&#39;: 495,
+ &#39;film&#39;: 496,
+ &#39;final&#39;: 497,
+ &#39;financial&#39;: 498,
+ &#39;find&#39;: 499,
+ &#39;finding&#39;: 500,
+ &#39;finishes&#39;: 501,
+ &#39;finite&#39;: 502,
+ &#39;first&#39;: 503,
+ &#39;fix&#39;: 504,
+ &#39;fixed&#39;: 505,
+ &#39;fixes&#39;: 506,
+ &#39;fixing&#39;: 507,
+ &#39;flaw&#39;: 508,
+ &#39;flaws&#39;: 509,
+ &#39;flight&#39;: 510,
+ &#39;floor&#39;: 511,
+ &#39;fly&#39;: 512,
+ &#39;focus&#39;: 513,
+ &#39;focuses&#39;: 514,
+ &#39;following&#39;: 515,
+ &#39;followup&#39;: 516,
+ &#39;force&#39;: 517,
+ &#39;forever&#39;: 518,
+ &#39;forget&#39;: 519,
+ &#39;forgets&#39;: 520,
+ &#39;form&#39;: 521,
+ &#39;formal&#39;: 522,
+ &#39;formula&#39;: 523,
+ &#39;forward&#39;: 524,
+ &#39;found&#39;: 525,
+ &#39;fraud&#39;: 526,
+ &#39;free&#39;: 527,
+ &#39;freed&#39;: 528,
+ &#39;freeze&#39;: 529,
+ &#39;frequent&#39;: 530,
+ &#39;frequently&#39;: 531,
+ &#39;fully&#39;: 532,
+ &#39;function&#39;: 533,
+ &#39;functionality&#39;: 534,
+ &#39;furnish&#39;: 535,
+ &#39;game&#39;: 536,
+ &#39;gary&#39;: 537,
+ &#39;gcc&#39;: 538,
+ &#39;gear&#39;: 539,
+ &#39;general&#39;: 540,
+ &#39;generation&#39;: 541,
+ &#39;genesis&#39;: 542,
+ &#39;get&#39;: 543,
+ &#39;give&#39;: 544,
+ &#39;given&#39;: 545,
+ &#39;gives&#39;: 546,
+ &#39;glitch&#39;: 547,
+ &#39;glitches&#39;: 548,
+ &#39;gnu&#39;: 549,
+ &#39;goodwill&#39;: 550,
+ &#39;google&#39;: 551,
+ &#39;government&#39;: 552,
+ &#39;grace&#39;: 553,
+ &#39;granted&#39;: 554,
+ &#39;graphics&#39;: 555,
+ &#39;gray&#39;: 556,
+ &#39;greek&#39;: 557,
+ &#39;gross&#39;: 558,
+ &#39;group&#39;: 559,
+ &#39;guidance&#39;: 560,
+ &#39;guide&#39;: 561,
+ &#39;hal&#39;: 562,
+ &#39;half&#39;: 563,
+ &#39;halting&#39;: 564,
+ &#39;handle&#39;: 565,
+ &#39;handles&#39;: 566,
+ &#39;handling&#39;: 567,
+ &#39;hang&#39;: 568,
+ &#39;happen&#39;: 569,
+ &#39;happening&#39;: 570,
+ &#39;happens&#39;: 571,
+ &#39;hardware&#39;: 572,
+ &#39;harmful&#39;: 573,
+ &#39;harsh&#39;: 574,
+ &#39;harvard&#39;: 575,
+ &#39;hat&#39;: 576,
+ &#39;heinlein&#39;: 577,
+ &#39;heisenbugs&#39;: 578,
+ &#39;helicopter&#39;: 579,
+ &#39;help&#39;: 580,
+ &#39;herein&#39;: 581,
+ &#39;hide&#39;: 582,
+ &#39;high&#39;: 583,
+ &#39;highest&#39;: 584,
+ &#39;highlights&#39;: 585,
+ &#39;historical&#39;: 586,
+ &#39;history&#39;: 587,
+ &#39;homeland&#39;: 588,
+ &#39;homicidal&#39;: 589,
+ &#39;hopper&#39;: 590,
+ &#39;hosts&#39;: 591,
+ &#39;house&#39;: 592,
+ &#39;however&#39;: 593,
+ &#39;http&#39;: 594,
+ &#39;https&#39;: 595,
+ &#39;huggins&#39;: 596,
+ &#39;huizinga&#39;: 597,
+ &#39;human&#39;: 598,
+ &#39;humorously&#39;: 599,
+ &#39;hyphen&#39;: 600,
+ &#39;ice&#39;: 601,
+ &#39;identical&#39;: 602,
+ &#39;identify&#39;: 603,
+ &#39;ieee&#39;: 604,
+ &#39;igi&#39;: 605,
+ &#39;ii&#39;: 606,
+ &#39;iii&#39;: 607,
+ &#39;image&#39;: 608,
+ &#39;imagining&#39;: 609,
+ &#39;impact&#39;: 610,
+ &#39;impacts&#39;: 611,
+ &#39;implementation&#39;: 612,
+ &#39;implementations&#39;: 613,
+ &#39;implications&#39;: 614,
+ &#39;implies&#39;: 615,
+ &#39;important&#39;: 616,
+ &#39;impractical&#39;: 617,
+ &#39;inadvertently&#39;: 618,
+ &#39;inc&#39;: 619,
+ &#39;incidents&#39;: 620,
+ &#39;include&#39;: 621,
+ &#39;included&#39;: 622,
+ &#39;includes&#39;: 623,
+ &#39;including&#39;: 624,
+ &#39;incompatibility&#39;: 625,
+ &#39;incompatible&#39;: 626,
+ &#39;incompatibly&#39;: 627,
+ &#39;incorrect&#39;: 628,
+ &#39;incorrectly&#39;: 629,
+ &#39;increasing&#39;: 630,
+ &#39;indicate&#39;: 631,
+ &#39;indicator&#39;: 632,
+ &#39;industry&#39;: 633,
+ &#39;infecting&#39;: 634,
+ &#39;infinite&#39;: 635,
+ &#39;information&#39;: 636,
+ &#39;informs&#39;: 637,
+ &#39;initially&#39;: 638,
+ &#39;injury&#39;: 639,
+ &#39;innovations&#39;: 640,
+ &#39;inputs&#39;: 641,
+ &#39;inquiry&#39;: 642,
+ &#39;inscrutable&#39;: 643,
+ &#39;insect&#39;: 644,
+ &#39;inspecting&#39;: 645,
+ &#39;inspired&#39;: 646,
+ &#39;instance&#39;: 647,
+ &#39;instead&#39;: 648,
+ &#39;institute&#39;: 649,
+ &#39;institution&#39;: 650,
+ &#39;instruction&#39;: 651,
+ &#39;instrumentation&#39;: 652,
+ &#39;insufficient&#39;: 653,
+ &#39;integers&#39;: 654,
+ &#39;intended&#39;: 655,
+ &#39;intense&#39;: 656,
+ &#39;interact&#39;: 657,
+ &#39;interactions&#39;: 658,
+ &#39;interest&#39;: 659,
+ &#39;interfacing&#39;: 660,
+ &#39;interfere&#39;: 661,
+ &#39;interpretation&#39;: 662,
+ &#39;interpreted&#39;: 663,
+ &#39;introduce&#39;: 664,
+ &#39;introduced&#39;: 665,
+ &#39;intuition&#39;: 666,
+ &#39;invention&#39;: 667,
+ &#39;inventions&#39;: 668,
+ &#39;invert&#39;: 669,
+ &#39;inverted&#39;: 670,
+ &#39;investigation&#39;: 671,
+ &#39;involved&#39;: 672,
+ &#39;involves&#39;: 673,
+ &#39;irrelevant&#39;: 674,
+ &#39;isaac&#39;: 675,
+ &#39;isbn&#39;: 676,
+ &#39;isolated&#39;: 677,
+ &#39;issue&#39;: 678,
+ &#39;issues&#39;: 679,
+ &#39;items&#39;: 680,
+ &#39;jargon&#39;: 681,
+ &#39;java&#39;: 682,
+ &#39;jim&#39;: 683,
+ &#39;joe&#39;: 684,
+ &#39;john&#39;: 685,
+ &#39;joined&#39;: 686,
+ &#39;journal&#39;: 687,
+ &#39;july&#39;: 688,
+ &#39;june&#39;: 689,
+ &#39;k&#39;: 690,
+ &#39;keep&#39;: 691,
+ &#39;kept&#39;: 692,
+ &#39;kildall&#39;: 693,
+ &#39;kill&#39;: 694,
+ &#39;killing&#39;: 695,
+ &#39;kinds&#39;: 696,
+ &#39;kintyre&#39;: 697,
+ &#39;knight&#39;: 698,
+ &#39;known&#39;: 699,
+ &#39;kps&#39;: 700,
+ &#39;labor&#39;: 701,
+ &#39;laboratory&#39;: 702,
+ &#39;language&#39;: 703,
+ &#39;languages&#39;: 704,
+ &#39;large&#39;: 705,
+ &#39;larger&#39;: 706,
+ &#39;last&#39;: 707,
+ &#39;late&#39;: 708,
+ &#39;later&#39;: 709,
+ &#39;launch&#39;: 710,
+ &#39;law&#39;: 711,
+ &#39;lead&#39;: 712,
+ &#39;leading&#39;: 713,
+ &#39;leads&#39;: 714,
+ &#39;leaks&#39;: 715,
+ &#39;least&#39;: 716,
+ &#39;left&#39;: 717,
+ &#39;legitimate&#39;: 718,
+ &#39;less&#39;: 719,
+ &#39;let&#39;: 720,
+ &#39;letter&#39;: 721,
+ &#39;levels&#39;: 722,
+ &#39;levy&#39;: 723,
+ &#39;lexicon&#39;: 724,
+ &#39;lie&#39;: 725,
+ &#39;life&#39;: 726,
+ &#39;lifecycle&#39;: 727,
+ &#39;likely&#39;: 728,
+ &#39;limited&#39;: 729,
+ &#39;limits&#39;: 730,
+ &#39;line&#39;: 731,
+ &#39;lines&#39;: 732,
+ &#39;links&#39;: 733,
+ &#39;linus&#39;: 734,
+ &#39;lippincott&#39;: 735,
+ &#39;list&#39;: 736,
+ &#39;lists&#39;: 737,
+ &#39;little&#39;: 738,
+ &#39;llvm&#39;: 739,
+ &#39;locate&#39;: 740,
+ &#39;locating&#39;: 741,
+ &#39;log&#39;: 742,
+ &#39;logic&#39;: 743,
+ &#39;logically&#39;: 744,
+ &#39;long&#39;: 745,
+ &#39;longer&#39;: 746,
+ &#39;looking&#39;: 747,
+ &#39;looping&#39;: 748,
+ &#39;loops&#39;: 749,
+ &#39;lords&#39;: 750,
+ &#39;loss&#39;: 751,
+ &#39;louise&#39;: 752,
+ &#39;loved&#39;: 753,
+ &#39;lovelace&#39;: 754,
+ &#39;low&#39;: 755,
+ &#39;lower&#39;: 756,
+ &#39;machine&#39;: 757,
+ &#39;made&#39;: 758,
+ &#39;magazine&#39;: 759,
+ &#39;main&#39;: 760,
+ &#39;maintain&#39;: 761,
+ &#39;maintenance&#39;: 762,
+ &#39;major&#39;: 763,
+ &#39;make&#39;: 764,
+ &#39;makes&#39;: 765,
+ &#39;making&#39;: 766,
+ &#39;malfunction&#39;: 767,
+ &#39;malfunctions&#39;: 768,
+ &#39;managed&#39;: 769,
+ &#39;management&#39;: 770,
+ &#39;managing&#39;: 771,
+ &#39;manifest&#39;: 772,
+ &#39;manuel&#39;: 773,
+ &#39;manufacturer&#39;: 774,
+ &#39;many&#39;: 775,
+ &#39;marc&#39;: 776,
+ &#39;mark&#39;: 777,
+ &#39;matches&#39;: 778,
+ &#39;math&#39;: 779,
+ &#39;mathematics&#39;: 780,
+ &#39;maurice&#39;: 781,
+ &#39;may&#39;: 782,
+ &#39;mdy&#39;: 783,
+ &#39;mean&#39;: 784,
+ &#39;meaning&#39;: 785,
+ &#39;measurements&#39;: 786,
+ &#39;mechanical&#39;: 787,
+ &#39;mechanism&#39;: 788,
+ &#39;mediawiki&#39;: 789,
+ &#39;members&#39;: 790,
+ &#39;memory&#39;: 791,
+ &#39;messages&#39;: 792,
+ &#39;met&#39;: 793,
+ &#39;meta&#39;: 794,
+ &#39;metamorph&#39;: 795,
+ &#39;metamorphism&#39;: 796,
+ &#39;methodologies&#39;: 797,
+ &#39;middle&#39;: 798,
+ &#39;might&#39;: 799,
+ &#39;mike&#39;: 800,
+ &#39;military&#39;: 801,
+ &#39;millennium&#39;: 802,
+ &#39;million&#39;: 803,
+ &#39;millionaire&#39;: 804,
+ &#39;minority&#39;: 805,
+ &#39;minute&#39;: 806,
+ &#39;missing&#39;: 807,
+ &#39;misspelled&#39;: 808,
+ &#39;mistake&#39;: 809,
+ &#39;mistakes&#39;: 810,
+ &#39;mistress&#39;: 811,
+ &#39;misunderstanding&#39;: 812,
+ &#39;misunderstandings&#39;: 813,
+ &#39;mitch&#39;: 814,
+ &#39;mitigated&#39;: 815,
+ &#39;mixture&#39;: 816,
+ &#39;modular&#39;: 817,
+ &#39;modules&#39;: 818,
+ &#39;money&#39;: 819,
+ &#39;monitor&#39;: 820,
+ &#39;monitoring&#39;: 821,
+ &#39;monster&#39;: 822,
+ &#39;months&#39;: 823,
+ &#39;moon&#39;: 824,
+ &#39;morph&#39;: 825,
+ &#39;moth&#39;: 826,
+ &#39;much&#39;: 827,
+ &#39;mull&#39;: 828,
+ &#39;multiple&#39;: 829,
+ &#39;murray&#39;: 830,
+ &#39;museum&#39;: 831,
+ &#39;must&#39;: 832,
+ &#39;mutual&#39;: 833,
+ &#39;myadd&#39;: 834,
+ &#39;mysubtract&#39;: 835,
+ &#39;name&#39;: 836,
+ &#39;named&#39;: 837,
+ &#39;names&#39;: 838,
+ &#39;namespaces&#39;: 839,
+ &#39;nasa&#39;: 840,
+ &#39;national&#39;: 841,
+ &#39;naturally&#39;: 842,
+ &#39;naval&#39;: 843,
+ &#39;nbsp&#39;: 844,
+ &#39;necessary&#39;: 845,
+ &#39;need&#39;: 846,
+ &#39;needed&#39;: 847,
+ &#39;networking&#39;: 848,
+ &#39;networks&#39;: 849,
+ &#39;never&#39;: 850,
+ &#39;new&#39;: 851,
+ &#39;news&#39;: 852,
+ &#39;next&#39;: 853,
+ &#39;nonconformity&#39;: 854,
+ &#39;nondeterministic&#39;: 855,
+ &#39;notation&#39;: 856,
+ &#39;note&#39;: 857,
+ &#39;notes&#39;: 858,
+ &#39;nothing&#39;: 859,
+ &#39;novel&#39;: 860,
+ &#39;november&#39;: 861,
+ &#39;nowiki&#39;: 862,
+ &#39;nrt&#39;: 863,
+ &#39;null&#39;: 864,
+ &#39;number&#39;: 865,
+ &#39;numbers&#39;: 866,
+ &#39;numerical&#39;: 867,
+ &#39;objective&#39;: 868,
+ &#39;objectives&#39;: 869,
+ &#39;observe&#39;: 870,
+ &#39;obsolete&#39;: 871,
+ &#39;occur&#39;: 872,
+ &#39;occurred&#39;: 873,
+ &#39;occurrence&#39;: 874,
+ &#39;occurring&#39;: 875,
+ &#39;odyssey&#39;: 876,
+ &#39;offered&#39;: 877,
+ &#39;office&#39;: 878,
+ &#39;often&#39;: 879,
+ &#39;old&#39;: 880,
+ &#39;onboard&#39;: 881,
+ &#39;one&#39;: 882,
+ &#39;ongoing&#39;: 883,
+ &#39;online&#39;: 884,
+ &#39;open&#39;: 885,
+ &#39;openssl&#39;: 886,
+ &#39;operate&#39;: 887,
+ &#39;operating&#39;: 888,
+ &#39;operation&#39;: 889,
+ &#39;operative&#39;: 890,
+ &#39;operator&#39;: 891,
+ &#39;operators&#39;: 892,
+ &#39;opts&#39;: 893,
+ &#39;orange&#39;: 894,
+ &#39;order&#39;: 895,
+ &#39;orders&#39;: 896,
+ &#39;originally&#39;: 897,
+ &#39;origins&#39;: 898,
+ &#39;orthogonal&#39;: 899,
+ &#39;others&#39;: 900,
+ &#39;otherwise&#39;: 901,
+ &#39;overflow&#39;: 902,
+ &#39;overhauled&#39;: 903,
+ &#39;oversights&#39;: 904,
+ &#39;oxford&#39;: 905,
+ &#39;p&#39;: 906,
+ &#39;packed&#39;: 907,
+ &#39;page&#39;: 908,
+ &#39;paper&#39;: 909,
+ &#39;papers&#39;: 910,
+ &#39;paradigm&#39;: 911,
+ &#39;paranoid&#39;: 912,
+ &#39;park&#39;: 913,
+ &#39;parke&#39;: 914,
+ &#39;part&#39;: 915,
+ &#39;particular&#39;: 916,
+ &#39;particularly&#39;: 917,
+ &#39;pascal&#39;: 918,
+ &#39;passed&#39;: 919,
+ &#39;past&#39;: 920,
+ &#39;patch&#39;: 921,
+ &#39;patient&#39;: 922,
+ &#39;penalties&#39;: 923,
+ &#39;pennies&#39;: 924,
+ &#39;people&#39;: 925,
+ &#39;per&#39;: 926,
+ &#39;perceived&#39;: 927,
+ &#39;percent&#39;: 928,
+ &#39;perform&#39;: 929,
+ &#39;performance&#39;: 930,
+ &#39;performed&#39;: 931,
+ &#39;performing&#39;: 932,
+ &#39;perhaps&#39;: 933,
+ &#39;personal&#39;: 934,
+ &#39;philosophy&#39;: 935,
+ &#39;photo&#39;: 936,
+ &#39;pi&#39;: 937,
+ &#39;piece&#39;: 938,
+ &#39;pilot&#39;: 939,
+ &#39;pinball&#39;: 940,
+ &#39;pioneer&#39;: 941,
+ &#39;places&#39;: 942,
+ &#39;plan&#39;: 943,
+ &#39;planned&#39;: 944,
+ &#39;planning&#39;: 945,
+ &#39;platform&#39;: 946,
+ &#39;plenty&#39;: 947,
+ &#39;plot&#39;: 948,
+ &#39;point&#39;: 949,
+ &#39;pointer&#39;: 950,
+ &#39;policy&#39;: 951,
+ &#39;policymakers&#39;: 952,
+ &#39;popular&#39;: 953,
+ &#39;popularized&#39;: 954,
+ &#39;possibility&#39;: 955,
+ &#39;possible&#39;: 956,
+ &#39;possibly&#39;: 957,
+ &#39;potential&#39;: 958,
+ &#39;powered&#39;: 959,
+ &#39;practical&#39;: 960,
+ &#39;practice&#39;: 961,
+ &#39;practices&#39;: 962,
+ &#39;precision&#39;: 963,
+ &#39;predate&#39;: 964,
+ &#39;predates&#39;: 965,
+ &#39;prematurely&#39;: 966,
+ &#39;preoccupation&#39;: 967,
+ &#39;preparedness&#39;: 968,
+ &#39;presenting&#39;: 969,
+ &#39;press&#39;: 970,
+ &#39;prevalent&#39;: 971,
+ &#39;prevent&#39;: 972,
+ &#39;prevention&#39;: 973,
+ &#39;primary&#39;: 974,
+ &#39;principle&#39;: 975,
+ &#39;print&#39;: 976,
+ &#39;priorities&#39;: 977,
+ &#39;priority&#39;: 978,
+ &#39;privacy&#39;: 979,
+ &#39;privilege&#39;: 980,
+ &#39;privileges&#39;: 981,
+ &#39;probability&#39;: 982,
+ &#39;problem&#39;: 983,
+ &#39;problems&#39;: 984,
+ &#39;process&#39;: 985,
+ &#39;processes&#39;: 986,
+ &#39;processing&#39;: 987,
+ &#39;produce&#39;: 988,
+ &#39;produced&#39;: 989,
+ &#39;producer&#39;: 990,
+ &#39;producers&#39;: 991,
+ &#39;producing&#39;: 992,
+ &#39;product&#39;: 993,
+ &#39;professionals&#39;: 994,
+ &#39;program&#39;: 995,
+ &#39;programmed&#39;: 996,
+ &#39;programmer&#39;: 997,
+ &#39;programmers&#39;: 998,
+ &#39;programming&#39;: 999,
+ ...}
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>所以，我想查 “computer” 這個字的 id ，我可以這樣做：</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dictionary</span><span class="o">.</span><span class="n">token2id</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;computer&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>246
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>如果，我要查 “computer” 的 id，我可以這樣查：</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">computer_id</span> <span class="o">=</span> <span class="n">dictionary</span><span class="o">.</span><span class="n">token2id</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;computer&quot;</span><span class="p">)</span>
+<span class="n">computer_id</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>246
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dictionary</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">computer_id</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;computer&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="bag-of-word">
+<h3><span class="section-number">2.3.3. </span>bag of word<a class="headerlink" href="#bag-of-word" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>有了剛剛的 id vs token 對應表後 (dictionary)，可以使用 <code class="docutils literal notranslate"><span class="pre">.doc2bow()</span></code> 這個 method，去看一篇文章中，各個 id 出現幾次.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corpus</span> <span class="o">=</span> <span class="p">[</span><span class="n">dictionary</span><span class="o">.</span><span class="n">doc2bow</span><span class="p">(</span><span class="n">article</span><span class="p">)</span> <span class="k">for</span> <span class="n">article</span> <span class="ow">in</span> <span class="n">articles</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>例如，我看一下剛剛的第 5 篇文章，他的 bag of word:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bow_4</span> <span class="o">=</span> <span class="n">corpus</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+<span class="n">bow_4</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(1, 1), (13, 1), (15, 1), (18, 1), (26, 1)]
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>可以看到，我列出前五筆，他分別告訴我， id 是 1 的字，出現 1 次; id 是 13 的字，出現 1 次 …</p></li>
+<li><p>他只會列出有出現的字，所以 <code class="docutils literal notranslate"><span class="pre">bow_4</span></code> 只列出 706 個字的詞頻。但原本的字典有 6211 個字</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">bow_4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dictionary</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>706
+6211
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>那我如果想看，這篇文章最高頻的 5 個字，我可以這樣做：</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bow_4_sort</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">bow_4</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">w</span><span class="p">:</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">word_id</span><span class="p">,</span> <span class="n">word_count</span> <span class="ow">in</span> <span class="n">bow_4_sort</span><span class="p">[:</span><span class="mi">5</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">dictionary</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">word_id</span><span class="p">),</span> <span class="n">word_count</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>debugging 39
+system 19
+software 16
+tools 14
+computer 12
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>如果要做出所有 article 的 bow (就全部 article 一起看的意思)</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+
+<span class="n">total_word_count</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">word_id</span><span class="p">,</span> <span class="n">word_count</span> <span class="ow">in</span> <span class="n">itertools</span><span class="o">.</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="n">corpus</span><span class="p">):</span>
+    <span class="n">total_word_count</span><span class="p">[</span><span class="n">word_id</span><span class="p">]</span> <span class="o">+=</span> <span class="n">word_count</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>那就可以得到以下 dictionary</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">total_word_count</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>defaultdict(int,
+            {0: 1,
+             1: 14,
+             2: 7,
+             3: 1,
+             4: 38,
+             5: 1,
+             6: 2,
+             7: 3,
+             8: 12,
+             9: 3,
+             10: 1,
+             11: 2,
+             12: 4,
+             13: 7,
+             14: 4,
+             15: 5,
+             16: 14,
+             17: 8,
+             18: 7,
+             19: 9,
+             20: 12,
+             21: 1,
+             22: 2,
+             23: 7,
+             24: 10,
+             25: 6,
+             26: 26,
+             27: 1,
+             28: 1,
+             29: 2,
+             30: 2,
+             31: 2,
+             32: 2,
+             33: 3,
+             34: 10,
+             35: 5,
+             36: 10,
+             37: 9,
+             38: 16,
+             39: 7,
+             40: 3,
+             41: 5,
+             42: 1,
+             43: 26,
+             44: 12,
+             45: 9,
+             46: 1,
+             47: 9,
+             48: 95,
+             49: 2,
+             50: 19,
+             51: 8,
+             52: 3,
+             53: 38,
+             54: 7,
+             55: 2,
+             56: 1,
+             57: 4,
+             58: 33,
+             59: 1,
+             60: 18,
+             61: 1,
+             62: 2,
+             63: 9,
+             64: 1,
+             65: 6,
+             66: 37,
+             67: 2,
+             68: 1,
+             69: 3,
+             70: 8,
+             71: 11,
+             72: 3,
+             73: 11,
+             74: 1,
+             75: 62,
+             76: 45,
+             77: 4,
+             78: 19,
+             79: 11,
+             80: 3,
+             81: 10,
+             82: 2,
+             83: 1,
+             84: 1,
+             85: 22,
+             86: 1,
+             87: 1,
+             88: 6,
+             89: 2,
+             90: 6,
+             91: 1,
+             92: 1,
+             93: 3,
+             94: 1,
+             95: 3,
+             96: 1,
+             97: 3,
+             98: 2,
+             99: 1,
+             100: 4,
+             101: 2,
+             102: 2,
+             103: 3,
+             104: 10,
+             105: 3,
+             106: 4,
+             107: 1,
+             108: 14,
+             109: 4,
+             110: 9,
+             111: 1,
+             112: 9,
+             113: 17,
+             114: 15,
+             115: 1,
+             116: 2,
+             117: 2,
+             118: 4,
+             119: 3,
+             120: 1,
+             121: 3,
+             122: 2,
+             123: 6,
+             124: 1,
+             125: 20,
+             126: 1,
+             127: 2,
+             128: 1,
+             129: 2,
+             130: 17,
+             131: 1,
+             132: 6,
+             133: 6,
+             134: 7,
+             135: 2,
+             136: 4,
+             137: 2,
+             138: 1,
+             139: 3,
+             140: 3,
+             141: 1,
+             142: 1,
+             143: 3,
+             144: 1,
+             145: 95,
+             146: 8,
+             147: 1,
+             148: 1,
+             149: 1,
+             150: 4,
+             151: 3,
+             152: 15,
+             153: 7,
+             154: 89,
+             155: 1,
+             156: 1,
+             157: 3,
+             158: 80,
+             159: 7,
+             160: 1,
+             161: 1,
+             162: 13,
+             163: 6,
+             164: 2,
+             165: 1,
+             166: 3,
+             167: 16,
+             168: 58,
+             169: 7,
+             170: 1,
+             171: 2,
+             172: 2,
+             173: 11,
+             174: 1,
+             175: 1,
+             176: 29,
+             177: 20,
+             178: 14,
+             179: 9,
+             180: 1,
+             181: 70,
+             182: 1,
+             183: 26,
+             184: 10,
+             185: 10,
+             186: 7,
+             187: 1,
+             188: 37,
+             189: 11,
+             190: 12,
+             191: 2,
+             192: 3,
+             193: 16,
+             194: 11,
+             195: 1,
+             196: 11,
+             197: 2,
+             198: 17,
+             199: 12,
+             200: 2,
+             201: 29,
+             202: 322,
+             203: 2,
+             204: 2,
+             205: 5,
+             206: 6,
+             207: 1,
+             208: 2,
+             209: 2,
+             210: 2,
+             211: 235,
+             212: 2,
+             213: 3,
+             214: 6,
+             215: 2,
+             216: 1,
+             217: 7,
+             218: 4,
+             219: 9,
+             220: 1,
+             221: 1,
+             222: 6,
+             223: 2,
+             224: 1,
+             225: 14,
+             226: 4,
+             227: 1,
+             228: 2,
+             229: 47,
+             230: 18,
+             231: 14,
+             232: 10,
+             233: 12,
+             234: 5,
+             235: 22,
+             236: 31,
+             237: 16,
+             238: 14,
+             239: 10,
+             240: 1,
+             241: 15,
+             242: 9,
+             243: 22,
+             244: 1,
+             245: 18,
+             246: 597,
+             247: 156,
+             248: 158,
+             249: 9,
+             250: 1,
+             251: 1,
+             252: 1,
+             253: 1,
+             254: 22,
+             255: 1,
+             256: 3,
+             257: 1,
+             258: 1,
+             259: 2,
+             260: 3,
+             261: 2,
+             262: 3,
+             263: 20,
+             264: 3,
+             265: 7,
+             266: 2,
+             267: 10,
+             268: 7,
+             269: 9,
+             270: 8,
+             271: 8,
+             272: 5,
+             273: 61,
+             274: 5,
+             275: 3,
+             276: 1,
+             277: 2,
+             278: 9,
+             279: 7,
+             280: 1,
+             281: 2,
+             282: 4,
+             283: 9,
+             284: 2,
+             285: 44,
+             286: 6,
+             287: 2,
+             288: 27,
+             289: 15,
+             290: 15,
+             291: 2,
+             292: 3,
+             293: 3,
+             294: 1,
+             295: 12,
+             296: 2,
+             297: 8,
+             298: 3,
+             299: 5,
+             300: 2,
+             301: 8,
+             302: 4,
+             303: 3,
+             304: 5,
+             305: 1,
+             306: 103,
+             307: 6,
+             308: 11,
+             309: 5,
+             310: 4,
+             311: 4,
+             312: 5,
+             313: 2,
+             314: 1,
+             315: 1,
+             316: 5,
+             317: 3,
+             318: 4,
+             319: 2,
+             320: 15,
+             321: 42,
+             322: 27,
+             323: 72,
+             324: 2,
+             325: 5,
+             326: 3,
+             327: 12,
+             328: 1,
+             329: 13,
+             330: 2,
+             331: 1,
+             332: 4,
+             333: 6,
+             334: 4,
+             335: 1,
+             336: 7,
+             337: 1,
+             338: 2,
+             339: 8,
+             340: 9,
+             341: 61,
+             342: 40,
+             343: 1,
+             344: 12,
+             345: 1,
+             346: 18,
+             347: 11,
+             348: 10,
+             349: 6,
+             350: 41,
+             351: 42,
+             352: 1,
+             353: 10,
+             354: 3,
+             355: 2,
+             356: 49,
+             357: 15,
+             358: 3,
+             359: 1,
+             360: 48,
+             361: 20,
+             362: 1,
+             363: 2,
+             364: 1,
+             365: 3,
+             366: 2,
+             367: 4,
+             368: 15,
+             369: 1,
+             370: 1,
+             371: 1,
+             372: 1,
+             373: 2,
+             374: 2,
+             375: 7,
+             376: 1,
+             377: 15,
+             378: 1,
+             379: 1,
+             380: 5,
+             381: 1,
+             382: 18,
+             383: 1,
+             384: 1,
+             385: 3,
+             386: 25,
+             387: 1,
+             388: 9,
+             389: 39,
+             390: 18,
+             391: 4,
+             392: 3,
+             393: 6,
+             394: 2,
+             395: 8,
+             396: 4,
+             397: 6,
+             398: 6,
+             399: 23,
+             400: 9,
+             401: 39,
+             402: 5,
+             403: 2,
+             404: 1,
+             405: 2,
+             406: 1,
+             407: 3,
+             408: 9,
+             409: 28,
+             410: 2,
+             411: 3,
+             412: 1,
+             413: 7,
+             414: 22,
+             415: 2,
+             416: 23,
+             417: 131,
+             418: 6,
+             419: 14,
+             420: 1,
+             421: 6,
+             422: 1,
+             423: 1,
+             424: 8,
+             425: 11,
+             426: 1,
+             427: 1,
+             428: 1,
+             429: 4,
+             430: 4,
+             431: 63,
+             432: 36,
+             433: 18,
+             434: 4,
+             435: 3,
+             436: 13,
+             437: 8,
+             438: 6,
+             439: 44,
+             440: 6,
+             441: 6,
+             442: 5,
+             443: 19,
+             444: 1,
+             445: 5,
+             446: 3,
+             447: 4,
+             448: 95,
+             449: 23,
+             450: 108,
+             451: 1,
+             452: 1,
+             453: 1,
+             454: 14,
+             455: 45,
+             456: 1,
+             457: 11,
+             458: 2,
+             459: 1,
+             460: 1,
+             461: 2,
+             462: 5,
+             463: 4,
+             464: 9,
+             465: 3,
+             466: 2,
+             467: 6,
+             468: 13,
+             469: 1,
+             470: 11,
+             471: 2,
+             472: 13,
+             473: 6,
+             474: 13,
+             475: 4,
+             476: 2,
+             477: 4,
+             478: 3,
+             479: 5,
+             480: 6,
+             481: 10,
+             482: 12,
+             483: 3,
+             484: 3,
+             485: 3,
+             486: 1,
+             487: 3,
+             488: 12,
+             489: 26,
+             490: 1,
+             491: 2,
+             492: 1,
+             493: 2,
+             494: 11,
+             495: 76,
+             496: 9,
+             497: 5,
+             498: 3,
+             499: 17,
+             500: 5,
+             501: 2,
+             502: 2,
+             503: 151,
+             504: 7,
+             505: 11,
+             506: 4,
+             507: 7,
+             508: 3,
+             509: 5,
+             510: 11,
+             511: 1,
+             512: 2,
+             513: 2,
+             514: 3,
+             515: 16,
+             516: 1,
+             517: 4,
+             518: 1,
+             519: 2,
+             520: 1,
+             521: 32,
+             522: 9,
+             523: 1,
+             524: 1,
+             525: 16,
+             526: 3,
+             527: 19,
+             528: 1,
+             529: 1,
+             530: 2,
+             531: 11,
+             532: 5,
+             533: 36,
+             534: 11,
+             535: 1,
+             536: 9,
+             537: 2,
+             538: 1,
+             539: 3,
+             540: 30,
+             541: 13,
+             542: 2,
+             543: 7,
+             544: 7,
+             545: 20,
+             546: 4,
+             547: 1,
+             548: 2,
+             549: 4,
+             550: 2,
+             551: 10,
+             552: 11,
+             553: 70,
+             554: 2,
+             555: 15,
+             556: 1,
+             557: 4,
+             558: 1,
+             559: 11,
+             560: 1,
+             561: 9,
+             562: 2,
+             563: 9,
+             564: 1,
+             565: 13,
+             566: 3,
+             567: 90,
+             568: 4,
+             569: 5,
+             570: 1,
+             571: 3,
+             572: 70,
+             573: 1,
+             574: 1,
+             575: 25,
+             576: 2,
+             577: 1,
+             578: 1,
+             579: 2,
+             580: 15,
+             581: 1,
+             582: 5,
+             583: 19,
+             584: 4,
+             585: 1,
+             586: 6,
+             587: 46,
+             588: 1,
+             589: 1,
+             590: 125,
+             591: 1,
+             592: 7,
+             593: 35,
+             594: 129,
+             595: 26,
+             596: 1,
+             597: 1,
+             598: 10,
+             599: 2,
+             600: 1,
+             601: 3,
+             602: 1,
+             603: 6,
+             604: 20,
+             605: 1,
+             606: 32,
+             607: 2,
+             608: 8,
+             609: 1,
+             610: 11,
+             611: 1,
+             612: 22,
+             613: 9,
+             614: 2,
+             615: 2,
+             616: 12,
+             617: 2,
+             618: 1,
+             619: 4,
+             620: 1,
+             621: 36,
+             622: 5,
+             623: 17,
+             624: 18,
+             625: 1,
+             626: 3,
+             627: 1,
+             628: 10,
+             629: 1,
+             630: 4,
+             631: 4,
+             632: 1,
+             633: 20,
+             634: 2,
+             635: 2,
+             636: 64,
+             637: 1,
+             638: 5,
+             639: 1,
+             640: 1,
+             641: 3,
+             642: 4,
+             643: 1,
+             644: 2,
+             645: 1,
+             646: 2,
+             647: 11,
+             648: 22,
+             649: 14,
+             650: 3,
+             651: 46,
+             652: 1,
+             653: 1,
+             654: 3,
+             655: 7,
+             656: 1,
+             657: 4,
+             658: 1,
+             659: 3,
+             660: 1,
+             661: 2,
+             662: 7,
+             663: 16,
+             664: 1,
+             665: 14,
+             666: 1,
+             667: 8,
+             668: 1,
+             669: 1,
+             670: 1,
+             671: 1,
+             672: 8,
+             673: 13,
+             674: 1,
+             675: 1,
+             676: 46,
+             677: 3,
+             678: 8,
+             679: 10,
+             680: 6,
+             681: 4,
+             682: 52,
+             683: 4,
+             684: 1,
+             685: 15,
+             686: 3,
+             687: 32,
+             688: 13,
+             689: 16,
+             690: 2,
+             691: 8,
+             692: 3,
+             693: 4,
+             694: 3,
+             695: 2,
+             696: 5,
+             697: 1,
+             698: 1,
+             699: 45,
+             700: 1,
+             701: 1,
+             702: 6,
+             703: 189,
+             704: 131,
+             705: 31,
+             706: 7,
+             707: 48,
+             708: 7,
+             709: 26,
+             710: 1,
+             711: 12,
+             712: 4,
+             713: 2,
+             714: 4,
+             715: 1,
+             716: 15,
+             717: 6,
+             718: 6,
+             719: 15,
+             720: 1,
+             721: 4,
+             722: 6,
+             723: 2,
+             724: 1,
+             725: 2,
+             726: 12,
+             727: 3,
+             728: 5,
+             729: 16,
+             730: 1,
+             731: 16,
+             732: 11,
+             733: 9,
+             734: 1,
+             735: 1,
+             736: 33,
+             737: 8,
+             738: 5,
+             739: 1,
+             740: 1,
+             741: 3,
+             742: 9,
+             743: 21,
+             744: 1,
+             745: 14,
+             746: 10,
+             747: 1,
+             748: 1,
+             749: 4,
+             750: 1,
+             751: 7,
+             752: 1,
+             753: 1,
+             754: 6,
+             755: 12,
+             756: 8,
+             757: 107,
+             758: 29,
+             759: 6,
+             760: 53,
+             761: 2,
+             762: 6,
+             763: 13,
+             764: 34,
+             765: 12,
+             766: 7,
+             767: 1,
+             768: 1,
+             769: 3,
+             770: 25,
+             771: 1,
+             772: 1,
+             773: 1,
+             774: 5,
+             775: 83,
+             776: 2,
+             777: 32,
+             778: 2,
+             779: 3,
+             780: 13,
+             781: 2,
+             782: 189,
+             783: 2,
+             784: 4,
+             785: 10,
+             786: 1,
+             787: 24,
+             788: 20,
+             789: 1,
+             790: 4,
+             791: 84,
+             792: 8,
+             793: 3,
+             794: 1,
+             795: 2,
+             796: 1,
+             797: 2,
+             798: 4,
+             799: 30,
+             800: 2,
+             801: 18,
+             802: 3,
+             803: 6,
+             804: 1,
+             805: 1,
+             806: 1,
+             807: 5,
+             808: 1,
+             809: 7,
+             810: 5,
+             811: 1,
+             812: 3,
+             813: 1,
+             814: 2,
+             815: 1,
+             816: 1,
+             817: 1,
+             818: 3,
+             819: 6,
+             820: 6,
+             821: 2,
+             822: 1,
+             823: 4,
+             824: 1,
+             825: 1,
+             826: 12,
+             827: 25,
+             828: 1,
+             829: 19,
+             830: 23,
+             831: 10,
+             832: 14,
+             833: 1,
+             834: 1,
+             835: 1,
+             836: 7,
+             837: 20,
+             838: 3,
+             839: 1,
+             840: 4,
+             841: 30,
+             842: 2,
+             843: 25,
+             844: 38,
+             845: 15,
+             846: 20,
+             847: 14,
+             848: 11,
+             849: 9,
+             850: 7,
+             851: 61,
+             852: 11,
+             853: 12,
+             854: 1,
+             855: 1,
+             856: 3,
+             857: 13,
+             858: 11,
+             859: 2,
+             860: 5,
+             861: 21,
+             862: 2,
+             863: 1,
+             864: 3,
+             865: 46,
+             866: 32,
+             867: 10,
+             868: 4,
+             869: 1,
+             870: 1,
+             871: 5,
+             872: 6,
+             873: 9,
+             874: 3,
+             875: 2,
+             876: 4,
+             877: 2,
+             878: 18,
+             879: 84,
+             880: 8,
+             881: 1,
+             882: 103,
+             883: 1,
+             884: 17,
+             885: 13,
+             886: 2,
+             887: 9,
+             888: 79,
+             889: 28,
+             890: 1,
+             891: 4,
+             892: 3,
+             893: 1,
+             894: 2,
+             895: 32,
+             896: 3,
+             897: 5,
+             898: 2,
+             899: 1,
+             900: 14,
+             901: 7,
+             902: 8,
+             903: 1,
+             904: 1,
+             905: 4,
+             906: 9,
+             907: 1,
+             908: 42,
+             909: 15,
+             910: 6,
+             911: 2,
+             912: 1,
+             913: 8,
+             914: 1,
+             915: 38,
+             916: 20,
+             917: 7,
+             918: 8,
+             919: 3,
+             920: 5,
+             921: 5,
+             922: 1,
+             923: 1,
+             924: 1,
+             925: 29,
+             926: 4,
+             927: 1,
+             928: 4,
+             929: 27,
+             930: 15,
+             931: 12,
+             932: 8,
+             933: 7,
+             934: 26,
+             935: 4,
+             936: 1,
+             937: 1,
+             938: 8,
+             939: 3,
+             940: 2,
+             941: 7,
+             942: 1,
+             943: 3,
+             944: 2,
+             945: 3,
+             946: 12,
+             947: 1,
+             948: 1,
+             949: 17,
+             950: 4,
+             951: 7,
+             952: 1,
+             953: 14,
+             954: 2,
+             955: 2,
+             956: 32,
+             957: 4,
+             958: 6,
+             959: 1,
+             960: 8,
+             961: 11,
+             962: 3,
+             963: 2,
+             964: 1,
+             965: 1,
+             966: 1,
+             967: 1,
+             968: 1,
+             969: 1,
+             970: 28,
+             971: 2,
+             972: 8,
+             973: 5,
+             974: 4,
+             975: 7,
+             976: 7,
+             977: 1,
+             978: 17,
+             979: 4,
+             980: 5,
+             981: 3,
+             982: 4,
+             983: 39,
+             984: 24,
+             985: 69,
+             986: 9,
+             987: 33,
+             988: 9,
+             989: 7,
+             990: 1,
+             991: 1,
+             992: 4,
+             993: 13,
+             994: 2,
+             995: 226,
+             996: 14,
+             997: 35,
+             998: 27,
+             999: 217,
+             ...})
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>依照詞頻做排序：</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sorted_word_count</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">total_word_count</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">w</span><span class="p">:</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>取最高頻前五名：</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">word_id</span><span class="p">,</span> <span class="n">word_count</span> <span class="ow">in</span> <span class="n">sorted_word_count</span><span class="p">[:</span><span class="mi">5</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">dictionary</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">word_id</span><span class="p">),</span> <span class="n">word_count</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>computer 597
+software 451
+cite 322
+ref 259
+code 235
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>跟之前一樣，如果你對他的資料格式很不爽 (對 dictionary 或 list of tuple 的格式每送，比較喜歡dataframe) ，那可以自己做轉換：</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bow_4_words</span> <span class="o">=</span> <span class="p">[</span><span class="n">dictionary</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">bow_4</span><span class="p">]</span>
+<span class="n">bow_4_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">bow_4_words</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;word&quot;</span><span class="p">]),</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">bow_4</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;freq&quot;</span><span class="p">])],</span>
+    <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="p">)</span>
+<span class="n">bow_4_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;freq&quot;</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>word</th>
+      <th>id</th>
+      <th>freq</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>66</th>
+      <td>debugging</td>
+      <td>323</td>
+      <td>39</td>
+    </tr>
+    <tr>
+      <th>279</th>
+      <td>system</td>
+      <td>1251</td>
+      <td>19</td>
+    </tr>
+    <tr>
+      <th>262</th>
+      <td>software</td>
+      <td>1186</td>
+      <td>16</td>
+    </tr>
+    <tr>
+      <th>297</th>
+      <td>tools</td>
+      <td>1293</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>309</th>
+      <td>used</td>
+      <td>1351</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>314</th>
+      <td>usually</td>
+      <td>1356</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>312</th>
+      <td>uses</td>
+      <td>1354</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>311</th>
+      <td>users</td>
+      <td>1353</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>307</th>
+      <td>usage</td>
+      <td>1349</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>705</th>
+      <td>zeller</td>
+      <td>3567</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+<p>706 rows × 3 columns</p>
+</div></div></div>
+</div>
+<ul class="simple">
+<li><p>所有文章一起看詞頻df也可以：</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">total_words</span> <span class="o">=</span> <span class="p">[</span><span class="n">dictionary</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">total_word_count</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
+<span class="n">total_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">total_words</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;word&quot;</span><span class="p">]),</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">total_word_count</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="s2">&quot;freq&quot;</span><span class="p">])],</span>
+    <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="p">)</span>
+<span class="n">total_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;freq&quot;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>word</th>
+      <th>id</th>
+      <th>freq</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>246</th>
+      <td>computer</td>
+      <td>246</td>
+      <td>597</td>
+    </tr>
+    <tr>
+      <th>1186</th>
+      <td>software</td>
+      <td>1186</td>
+      <td>451</td>
+    </tr>
+    <tr>
+      <th>202</th>
+      <td>cite</td>
+      <td>202</td>
+      <td>322</td>
+    </tr>
+    <tr>
+      <th>1048</th>
+      <td>ref</td>
+      <td>1048</td>
+      <td>259</td>
+    </tr>
+    <tr>
+      <th>211</th>
+      <td>code</td>
+      <td>211</td>
+      <td>235</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>3443</th>
+      <td>isolating</td>
+      <td>3443</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3444</th>
+      <td>jackson</td>
+      <td>3444</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3445</th>
+      <td>kaufmann</td>
+      <td>3445</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3448</th>
+      <td>klein</td>
+      <td>3448</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>6210</th>
+      <td>virtually</td>
+      <td>6210</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+<p>6211 rows × 3 columns</p>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="tf-idf">
+<h3><span class="section-number">2.3.4. </span>tf-idf<a class="headerlink" href="#tf-idf" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>tf-idf 的算法是：</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(tf_{ij} = \frac{n_{ij}}{\sum_k n_{kj}}\)</span>: 第 i 個詞，在第j個文件中的tf，等於第i個詞在第j個文件的詞頻(<span class="math notranslate nohighlight">\(n_{ij}\)</span>，除上第i個詞在所有文件的總詞頻。</p></li>
+<li><p><span class="math notranslate nohighlight">\(idf_{i} = log(\frac{N}{1 + df_{i}})\)</span>: 第 i 個詞的 inverse document frequency，是用 總文件數 除以 (1 + 共多少文件出現過第i個詞)，再取 log.</p></li>
+</ul>
+</li>
+<li><p>所以，第 j 個文件中的第 i 個詞，他的 tf-idf = <span class="math notranslate nohighlight">\(tf_{ij} \times idf_{i}\)</span></p></li>
+<li><p>那我們在 traning 的時候，就是先把 tf 中的 <span class="math notranslate nohighlight">\(\sum_k n_{kj}\)</span> 的算好，把 <span class="math notranslate nohighlight">\(idf_{i}\)</span> 算好，那只要丟一份新文件給我時，告訴我 <span class="math notranslate nohighlight">\(n_{ij}\)</span>，就可以幫你算出 tf-idf 了</p></li>
+<li><p>舉例來說，我們先用剛剛的 <code class="docutils literal notranslate"><span class="pre">corpus</span></code> 來 train 一個 <code class="docutils literal notranslate"><span class="pre">tfidf</span></code> model</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">gensim.models.tfidfmodel</span> <span class="kn">import</span> <span class="n">TfidfModel</span>
+<span class="n">tfidf</span> <span class="o">=</span> <span class="n">TfidfModel</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>那現在有一個新的文件，他的詞頻長這樣：</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">my_doc</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>他的 tf-idf 就會是：</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tfidf</span><span class="p">[</span><span class="n">my_doc</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(1, 0.7636533381687757),
+ (13, 0.5787122641421957),
+ (15, 0.2420723809096083),
+ (18, 0.15273066763375515)]
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>同理，我如果要拿之前第5篇的文章 (bow_4) 當例子，他的 tf-idf 就會是</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tfidf_weights</span> <span class="o">=</span> <span class="n">tfidf</span><span class="p">[</span><span class="n">bow_4</span><span class="p">]</span>
+<span class="n">tfidf_weights</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span> <span class="c1"># 取前五筆來呈現就好</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(1, 0.012342593513743332),
+ (13, 0.015589120265078844),
+ (15, 0.019562547880927355),
+ (18, 0.012342593513743332),
+ (26, 0.019562547880927355)]
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>那我如果想知道這篇文章的關鍵字，我就可以看 tf-idf 最大的五個詞是哪 5 個 (就不會只看詞頻最大的 5 個了)</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sorted_tfidf_weights</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">tfidf_weights</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">w</span><span class="p">:</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Print the top 5 weighted words</span>
+<span class="k">for</span> <span class="n">term_id</span><span class="p">,</span> <span class="n">weight</span> <span class="ow">in</span> <span class="n">sorted_tfidf_weights</span><span class="p">[:</span><span class="mi">5</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">dictionary</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">term_id</span><span class="p">),</span> <span class="n">weight</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>wolf 0.2212386745420701
+debugging 0.1997829267158131
+fence 0.17699093963365609
+debugger 0.13576852865117664
+squeeze 0.13274320472524206
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "nlp_env"
+        },
+        kernelOptions: {
+            kernelName: "nlp_env",
+            path: "./intro_to_nlp"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'nlp_env'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="1_regex_tokenize.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><span class="section-number">1. </span>Regular expressions &amp; word tokenization</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="4_text_classification.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">3. </span>Text classification</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By The Jupyter Book Community<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>

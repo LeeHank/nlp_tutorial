@@ -1,0 +1,24 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: intro
+parts:
+  - caption: Intro to NLP
+    numbered: true
+    chapters:
+    - file: intro_to_nlp/1_regex_tokenize
+    - file: intro_to_nlp/2_topic_identification
+    - file: intro_to_nlp/4_text_classification
+  - caption: DL Book
+    numbered: true
+    chapters:
+    - file: dl_book/11_01_BOW
+    - file: dl_book/11_02_TFIDF
+    - file: dl_book/11_03_字詞前置處理
+    - file: dl_book/11_04_gensim_相似性比較
+    - file: dl_book/11_05_gensim_Word2Vec
+    - file: dl_book/11_06_GloVe
+    - file: dl_book/11_07_中文_NLP
+    - file: dl_book/11_08_spaCy_test
+    
