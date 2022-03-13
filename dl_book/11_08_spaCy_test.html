@@ -1,0 +1,984 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>11. spaCy 功能測試 &#8212; My sample book</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d59cb220de22ca1c485ebbdc042f0030.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="10. 中文 NLP" href="11_07_%E4%B8%AD%E6%96%87_NLP.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">My sample book</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Welcome to your Jupyter Book
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Intro to NLP
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro_to_nlp/1_regex_tokenize.html">
+   1. Regular expressions &amp; word tokenization
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro_to_nlp/2_topic_identification.html">
+   2. Simple topic identification
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro_to_nlp/4_text_classification.html">
+   3. Text classification
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  DL Book
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="11_01_BOW.html">
+   4. 以BOW實作自動摘要
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="11_02_TFIDF.html">
+   5. 以TF-IDF實作問答配對
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="11_03_%E5%AD%97%E8%A9%9E%E5%89%8D%E7%BD%AE%E8%99%95%E7%90%86.html">
+   6. 字詞前置處理
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="11_04_gensim_%E7%9B%B8%E4%BC%BC%E6%80%A7%E6%AF%94%E8%BC%83.html">
+   7. 以Gensim使用進行相似性比較
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="11_05_gensim_Word2Vec.html">
+   8. 以Gensim使用進行Word2Vec的相關功能
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="11_06_GloVe.html">
+   9. GloVe 測試
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="11_07_%E4%B8%AD%E6%96%87_NLP.html">
+   10. 中文 NLP
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   11. spaCy 功能測試
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/dl_book/11_08_spaCy_test.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+                onclick="printPdf(this)" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/executablebooks/jupyter-book"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fdl_book/11_08_spaCy_test.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/dl_book/11_08_spaCy_test.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show noprint">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   11.1. 安裝套件
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   11.2. 載入相關套件及預先訓練的模型
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>spaCy 功能測試</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   11.1. 安裝套件
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   11.2. 載入相關套件及預先訓練的模型
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="spacy">
+<h1><span class="section-number">11. </span>spaCy 功能測試<a class="headerlink" href="#spacy" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><span class="section-number">11.1. </span>安裝套件<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 安裝套件及預先訓練的模型</span>
+<span class="c1"># 這些都要在自己的虛擬環境下安裝，路徑才會對</span>
+<span class="o">!</span>pip install -U spacy
+<span class="o">!</span>python -m spacy download en_core_web_sm # 小型的英文模型
+<span class="o">!</span>python -m spacy download en_core_web_md
+<span class="o">!</span>python -m spacy download zh_core_web_sm # 小型的中文模型
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: spacy in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (3.2.3)
+Requirement already satisfied: cymem&lt;2.1.0,&gt;=2.0.2 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy) (2.0.6)
+Requirement already satisfied: spacy-loggers&lt;2.0.0,&gt;=1.0.0 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy) (1.0.1)
+Requirement already satisfied: pathy&gt;=0.3.5 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy) (0.6.1)
+Requirement already satisfied: blis&lt;0.8.0,&gt;=0.4.0 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy) (0.7.6)
+Requirement already satisfied: requests&lt;3.0.0,&gt;=2.13.0 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy) (2.24.0)
+Requirement already satisfied: tqdm&lt;5.0.0,&gt;=4.38.0 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy) (4.50.2)
+Requirement already satisfied: wasabi&lt;1.1.0,&gt;=0.8.1 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy) (0.9.0)
+Requirement already satisfied: thinc&lt;8.1.0,&gt;=8.0.12 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy) (8.0.13)
+Requirement already satisfied: srsly&lt;3.0.0,&gt;=2.4.1 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy) (2.4.2)
+Requirement already satisfied: pydantic!=1.8,!=1.8.1,&lt;1.9.0,&gt;=1.7.4 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy) (1.8.2)
+Requirement already satisfied: setuptools in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy) (41.2.0)
+Requirement already satisfied: packaging&gt;=20.0 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy) (20.4)
+Requirement already satisfied: catalogue&lt;2.1.0,&gt;=2.0.6 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy) (2.0.6)
+Requirement already satisfied: numpy&gt;=1.15.0 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy) (1.20.3)
+Requirement already satisfied: langcodes&lt;4.0.0,&gt;=3.2.0 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy) (3.3.0)
+Requirement already satisfied: typer&lt;0.5.0,&gt;=0.3.0 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy) (0.4.0)
+Requirement already satisfied: preshed&lt;3.1.0,&gt;=3.0.2 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy) (3.0.6)
+Requirement already satisfied: spacy-legacy&lt;3.1.0,&gt;=3.0.8 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy) (3.0.9)
+Requirement already satisfied: murmurhash&lt;1.1.0,&gt;=0.28.0 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy) (1.0.6)
+Requirement already satisfied: jinja2 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy) (2.11.2)
+Requirement already satisfied: pyparsing&gt;=2.0.2 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from packaging&gt;=20.0-&gt;spacy) (2.4.7)
+Requirement already satisfied: six in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from packaging&gt;=20.0-&gt;spacy) (1.15.0)
+Requirement already satisfied: smart-open&lt;6.0.0,&gt;=5.0.0 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from pathy&gt;=0.3.5-&gt;spacy) (5.2.1)
+Requirement already satisfied: typing-extensions&gt;=3.7.4.3 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from pydantic!=1.8,!=1.8.1,&lt;1.9.0,&gt;=1.7.4-&gt;spacy) (4.1.1)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from requests&lt;3.0.0,&gt;=2.13.0-&gt;spacy) (2020.6.20)
+Requirement already satisfied: idna&lt;3,&gt;=2.5 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from requests&lt;3.0.0,&gt;=2.13.0-&gt;spacy) (2.10)
+Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,&lt;1.26,&gt;=1.21.1 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from requests&lt;3.0.0,&gt;=2.13.0-&gt;spacy) (1.25.10)
+Requirement already satisfied: chardet&lt;4,&gt;=3.0.2 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from requests&lt;3.0.0,&gt;=2.13.0-&gt;spacy) (3.0.4)
+Requirement already satisfied: click&lt;9.0.0,&gt;=7.1.1 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from typer&lt;0.5.0,&gt;=0.3.0-&gt;spacy) (7.1.2)
+Requirement already satisfied: MarkupSafe&gt;=0.23 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from jinja2-&gt;spacy) (1.1.1)
+<span class=" -Color -Color-Yellow">WARNING: You are using pip version 21.3.1; however, version 22.0.4 is available.</span>
+<span class=" -Color -Color-Yellow">You should consider upgrading via the &#39;/Users/hanklee/.pyenv/versions/3.8.0/bin/python3.8 -m pip install --upgrade pip&#39; command.</span>
+Collecting en-core-web-sm==3.2.0
+  Using cached https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.2.0/en_core_web_sm-3.2.0-py3-none-any.whl (13.9 MB)
+Requirement already satisfied: spacy&lt;3.3.0,&gt;=3.2.0 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from en-core-web-sm==3.2.0) (3.2.3)
+Requirement already satisfied: srsly&lt;3.0.0,&gt;=2.4.1 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;en-core-web-sm==3.2.0) (2.4.2)
+Requirement already satisfied: thinc&lt;8.1.0,&gt;=8.0.12 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;en-core-web-sm==3.2.0) (8.0.13)
+Requirement already satisfied: jinja2 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;en-core-web-sm==3.2.0) (2.11.2)
+Requirement already satisfied: spacy-legacy&lt;3.1.0,&gt;=3.0.8 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;en-core-web-sm==3.2.0) (3.0.9)
+Requirement already satisfied: cymem&lt;2.1.0,&gt;=2.0.2 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;en-core-web-sm==3.2.0) (2.0.6)
+Requirement already satisfied: preshed&lt;3.1.0,&gt;=3.0.2 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;en-core-web-sm==3.2.0) (3.0.6)
+Requirement already satisfied: packaging&gt;=20.0 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;en-core-web-sm==3.2.0) (20.4)
+Requirement already satisfied: pydantic!=1.8,!=1.8.1,&lt;1.9.0,&gt;=1.7.4 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;en-core-web-sm==3.2.0) (1.8.2)
+Requirement already satisfied: pathy&gt;=0.3.5 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;en-core-web-sm==3.2.0) (0.6.1)
+Requirement already satisfied: requests&lt;3.0.0,&gt;=2.13.0 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;en-core-web-sm==3.2.0) (2.24.0)
+Requirement already satisfied: typer&lt;0.5.0,&gt;=0.3.0 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;en-core-web-sm==3.2.0) (0.4.0)
+Requirement already satisfied: catalogue&lt;2.1.0,&gt;=2.0.6 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;en-core-web-sm==3.2.0) (2.0.6)
+Requirement already satisfied: numpy&gt;=1.15.0 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;en-core-web-sm==3.2.0) (1.20.3)
+Requirement already satisfied: setuptools in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;en-core-web-sm==3.2.0) (41.2.0)
+Requirement already satisfied: blis&lt;0.8.0,&gt;=0.4.0 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;en-core-web-sm==3.2.0) (0.7.6)
+Requirement already satisfied: murmurhash&lt;1.1.0,&gt;=0.28.0 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;en-core-web-sm==3.2.0) (1.0.6)
+Requirement already satisfied: wasabi&lt;1.1.0,&gt;=0.8.1 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;en-core-web-sm==3.2.0) (0.9.0)
+Requirement already satisfied: tqdm&lt;5.0.0,&gt;=4.38.0 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;en-core-web-sm==3.2.0) (4.50.2)
+Requirement already satisfied: langcodes&lt;4.0.0,&gt;=3.2.0 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;en-core-web-sm==3.2.0) (3.3.0)
+Requirement already satisfied: spacy-loggers&lt;2.0.0,&gt;=1.0.0 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;en-core-web-sm==3.2.0) (1.0.1)
+Requirement already satisfied: six in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from packaging&gt;=20.0-&gt;spacy&lt;3.3.0,&gt;=3.2.0-&gt;en-core-web-sm==3.2.0) (1.15.0)
+Requirement already satisfied: pyparsing&gt;=2.0.2 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from packaging&gt;=20.0-&gt;spacy&lt;3.3.0,&gt;=3.2.0-&gt;en-core-web-sm==3.2.0) (2.4.7)
+Requirement already satisfied: smart-open&lt;6.0.0,&gt;=5.0.0 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from pathy&gt;=0.3.5-&gt;spacy&lt;3.3.0,&gt;=3.2.0-&gt;en-core-web-sm==3.2.0) (5.2.1)
+Requirement already satisfied: typing-extensions&gt;=3.7.4.3 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from pydantic!=1.8,!=1.8.1,&lt;1.9.0,&gt;=1.7.4-&gt;spacy&lt;3.3.0,&gt;=3.2.0-&gt;en-core-web-sm==3.2.0) (4.1.1)
+Requirement already satisfied: idna&lt;3,&gt;=2.5 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from requests&lt;3.0.0,&gt;=2.13.0-&gt;spacy&lt;3.3.0,&gt;=3.2.0-&gt;en-core-web-sm==3.2.0) (2.10)
+Requirement already satisfied: chardet&lt;4,&gt;=3.0.2 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from requests&lt;3.0.0,&gt;=2.13.0-&gt;spacy&lt;3.3.0,&gt;=3.2.0-&gt;en-core-web-sm==3.2.0) (3.0.4)
+Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,&lt;1.26,&gt;=1.21.1 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from requests&lt;3.0.0,&gt;=2.13.0-&gt;spacy&lt;3.3.0,&gt;=3.2.0-&gt;en-core-web-sm==3.2.0) (1.25.10)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from requests&lt;3.0.0,&gt;=2.13.0-&gt;spacy&lt;3.3.0,&gt;=3.2.0-&gt;en-core-web-sm==3.2.0) (2020.6.20)
+Requirement already satisfied: click&lt;9.0.0,&gt;=7.1.1 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from typer&lt;0.5.0,&gt;=0.3.0-&gt;spacy&lt;3.3.0,&gt;=3.2.0-&gt;en-core-web-sm==3.2.0) (7.1.2)
+Requirement already satisfied: MarkupSafe&gt;=0.23 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from jinja2-&gt;spacy&lt;3.3.0,&gt;=3.2.0-&gt;en-core-web-sm==3.2.0) (1.1.1)
+Installing collected packages: en-core-web-sm
+Successfully installed en-core-web-sm-3.2.0
+<span class=" -Color -Color-Yellow">WARNING: You are using pip version 21.3.1; however, version 22.0.4 is available.</span>
+<span class=" -Color -Color-Yellow">You should consider upgrading via the &#39;/Users/hanklee/.pyenv/versions/3.8.0/bin/python -m pip install --upgrade pip&#39; command.</span>
+<span class=" -Color -Color-C2">✔ Download and installation successful</span>
+You can now load the package via spacy.load(&#39;en_core_web_sm&#39;)
+Collecting zh-core-web-sm==3.2.0
+  Downloading https://github.com/explosion/spacy-models/releases/download/zh_core_web_sm-3.2.0/zh_core_web_sm-3.2.0-py3-none-any.whl (49.5 MB)
+     |████████████████████████████████| 49.5 MB 1.3 MB/s            
+?25hRequirement already satisfied: spacy&lt;3.3.0,&gt;=3.2.0 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from zh-core-web-sm==3.2.0) (3.2.3)
+Collecting spacy-pkuseg&lt;0.1.0,&gt;=0.0.27
+  Downloading spacy_pkuseg-0.0.28-cp38-cp38-macosx_10_9_x86_64.whl (2.4 MB)
+     |████████████████████████████████| 2.4 MB 1.1 MB/s            
+?25hRequirement already satisfied: typer&lt;0.5.0,&gt;=0.3.0 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;zh-core-web-sm==3.2.0) (0.4.0)
+Requirement already satisfied: thinc&lt;8.1.0,&gt;=8.0.12 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;zh-core-web-sm==3.2.0) (8.0.13)
+Requirement already satisfied: cymem&lt;2.1.0,&gt;=2.0.2 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;zh-core-web-sm==3.2.0) (2.0.6)
+Requirement already satisfied: tqdm&lt;5.0.0,&gt;=4.38.0 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;zh-core-web-sm==3.2.0) (4.50.2)
+Requirement already satisfied: wasabi&lt;1.1.0,&gt;=0.8.1 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;zh-core-web-sm==3.2.0) (0.9.0)
+Requirement already satisfied: spacy-loggers&lt;2.0.0,&gt;=1.0.0 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;zh-core-web-sm==3.2.0) (1.0.1)
+Requirement already satisfied: numpy&gt;=1.15.0 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;zh-core-web-sm==3.2.0) (1.20.3)
+Requirement already satisfied: spacy-legacy&lt;3.1.0,&gt;=3.0.8 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;zh-core-web-sm==3.2.0) (3.0.9)
+Requirement already satisfied: langcodes&lt;4.0.0,&gt;=3.2.0 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;zh-core-web-sm==3.2.0) (3.3.0)
+Requirement already satisfied: pathy&gt;=0.3.5 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;zh-core-web-sm==3.2.0) (0.6.1)
+Requirement already satisfied: packaging&gt;=20.0 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;zh-core-web-sm==3.2.0) (20.4)
+Requirement already satisfied: murmurhash&lt;1.1.0,&gt;=0.28.0 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;zh-core-web-sm==3.2.0) (1.0.6)
+Requirement already satisfied: srsly&lt;3.0.0,&gt;=2.4.1 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;zh-core-web-sm==3.2.0) (2.4.2)
+Requirement already satisfied: requests&lt;3.0.0,&gt;=2.13.0 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;zh-core-web-sm==3.2.0) (2.24.0)
+Requirement already satisfied: jinja2 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;zh-core-web-sm==3.2.0) (2.11.2)
+Requirement already satisfied: pydantic!=1.8,!=1.8.1,&lt;1.9.0,&gt;=1.7.4 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;zh-core-web-sm==3.2.0) (1.8.2)
+Requirement already satisfied: preshed&lt;3.1.0,&gt;=3.0.2 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;zh-core-web-sm==3.2.0) (3.0.6)
+Requirement already satisfied: setuptools in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;zh-core-web-sm==3.2.0) (41.2.0)
+Requirement already satisfied: blis&lt;0.8.0,&gt;=0.4.0 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;zh-core-web-sm==3.2.0) (0.7.6)
+Requirement already satisfied: catalogue&lt;2.1.0,&gt;=2.0.6 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from spacy&lt;3.3.0,&gt;=3.2.0-&gt;zh-core-web-sm==3.2.0) (2.0.6)
+Collecting cython&gt;=0.25
+  Downloading Cython-0.29.28-py2.py3-none-any.whl (983 kB)
+     |████████████████████████████████| 983 kB 1.1 MB/s            
+?25hRequirement already satisfied: pyparsing&gt;=2.0.2 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from packaging&gt;=20.0-&gt;spacy&lt;3.3.0,&gt;=3.2.0-&gt;zh-core-web-sm==3.2.0) (2.4.7)
+Requirement already satisfied: six in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from packaging&gt;=20.0-&gt;spacy&lt;3.3.0,&gt;=3.2.0-&gt;zh-core-web-sm==3.2.0) (1.15.0)
+Requirement already satisfied: smart-open&lt;6.0.0,&gt;=5.0.0 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from pathy&gt;=0.3.5-&gt;spacy&lt;3.3.0,&gt;=3.2.0-&gt;zh-core-web-sm==3.2.0) (5.2.1)
+Requirement already satisfied: typing-extensions&gt;=3.7.4.3 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from pydantic!=1.8,!=1.8.1,&lt;1.9.0,&gt;=1.7.4-&gt;spacy&lt;3.3.0,&gt;=3.2.0-&gt;zh-core-web-sm==3.2.0) (4.1.1)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from requests&lt;3.0.0,&gt;=2.13.0-&gt;spacy&lt;3.3.0,&gt;=3.2.0-&gt;zh-core-web-sm==3.2.0) (2020.6.20)
+Requirement already satisfied: chardet&lt;4,&gt;=3.0.2 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from requests&lt;3.0.0,&gt;=2.13.0-&gt;spacy&lt;3.3.0,&gt;=3.2.0-&gt;zh-core-web-sm==3.2.0) (3.0.4)
+Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,&lt;1.26,&gt;=1.21.1 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from requests&lt;3.0.0,&gt;=2.13.0-&gt;spacy&lt;3.3.0,&gt;=3.2.0-&gt;zh-core-web-sm==3.2.0) (1.25.10)
+Requirement already satisfied: idna&lt;3,&gt;=2.5 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from requests&lt;3.0.0,&gt;=2.13.0-&gt;spacy&lt;3.3.0,&gt;=3.2.0-&gt;zh-core-web-sm==3.2.0) (2.10)
+Requirement already satisfied: click&lt;9.0.0,&gt;=7.1.1 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from typer&lt;0.5.0,&gt;=0.3.0-&gt;spacy&lt;3.3.0,&gt;=3.2.0-&gt;zh-core-web-sm==3.2.0) (7.1.2)
+Requirement already satisfied: MarkupSafe&gt;=0.23 in /Users/hanklee/.pyenv/versions/3.8.0/lib/python3.8/site-packages (from jinja2-&gt;spacy&lt;3.3.0,&gt;=3.2.0-&gt;zh-core-web-sm==3.2.0) (1.1.1)
+Installing collected packages: cython, spacy-pkuseg, zh-core-web-sm
+Successfully installed cython-0.29.28 spacy-pkuseg-0.0.28 zh-core-web-sm-3.2.0
+<span class=" -Color -Color-Yellow">WARNING: You are using pip version 21.3.1; however, version 22.0.4 is available.</span>
+<span class=" -Color -Color-Yellow">You should consider upgrading via the &#39;/Users/hanklee/.pyenv/versions/3.8.0/bin/python -m pip install --upgrade pip&#39; command.</span>
+<span class=" -Color -Color-C2">✔ Download and installation successful</span>
+You can now load the package via spacy.load(&#39;zh_core_web_sm&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2><span class="section-number">11.2. </span>載入相關套件及預先訓練的模型<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 載入相關套件</span>
+<span class="kn">import</span> <span class="nn">spacy</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 載入詞向量模型</span>
+<span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;en_core_web_sm&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 分詞及取得詞性標籤(POS Tagging)</span>
+<span class="n">doc</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s2">&quot;Apple is looking at buying U.K. startup for $1 billion&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">doc</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">pos_</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">dep_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Apple PROPN nsubj
+is AUX aux
+looking VERB ROOT
+at ADP prep
+buying VERB pcomp
+U.K. PROPN dobj
+startup VERB dep
+for ADP prep
+$ SYM quantmod
+1 NUM compound
+billion NUM pobj
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 取得詳細的詞性標籤(POS Tagging)</span>
+<span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">doc</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">lemma_</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">pos_</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">tag_</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">dep_</span><span class="p">,</span>
+            <span class="n">token</span><span class="o">.</span><span class="n">shape_</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">is_alpha</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">is_stop</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Apple Apple PROPN NNP nsubj Xxxxx True False
+is be AUX VBZ aux xx True True
+looking look VERB VBG ROOT xxxx True False
+at at ADP IN prep xx True True
+buying buy VERB VBG pcomp xxxx True False
+U.K. U.K. PROPN NNP dobj X.X. False False
+startup startup VERB VBD dep xxxx True False
+for for ADP IN prep xxx True True
+$ $ SYM $ quantmod $ False False
+1 1 NUM CD compound d False False
+billion billion NUM CD pobj xxxx True False
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 顯示語意分析圖</span>
+<span class="kn">from</span> <span class="nn">spacy</span> <span class="kn">import</span> <span class="n">displacy</span>
+
+<span class="n">displacy</span><span class="o">.</span><span class="n">serve</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;dep&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Volumes/GoogleDrive/我的雲端硬碟/0. codepool_python/nlp_tutorial/nlp_env/lib/python3.8/site-packages/spacy/displacy/__init__.py:98: UserWarning: [W011] It looks like you&#39;re calling displacy.serve from within a Jupyter notebook or a similar environment. This likely means you&#39;re already running a local web server, so there&#39;s no need to make displaCy start another one. Instead, you should be able to replace displacy.serve with displacy.render to show the visualization.
+  warnings.warn(Warnings.W011)
+</pre></div>
+</div>
+<div class="output text_html"><span class="tex2jax_ignore"><!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>displaCy</title>
+    </head>
+
+    <body style="font-size: 16px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; padding: 4rem 2rem; direction: ltr">
+<figure style="margin-bottom: 6rem">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:lang="en" id="9864daccb93f44e29aac8d4d3a02e223-0" class="displacy" width="1975" height="487.0" direction="ltr" style="max-width: none; height: 487.0px; color: #000000; background: #ffffff; font-family: Arial; direction: ltr">
+<text class="displacy-token" fill="currentColor" text-anchor="middle" y="397.0">
+    <tspan class="displacy-word" fill="currentColor" x="50">Apple</tspan>
+    <tspan class="displacy-tag" dy="2em" fill="currentColor" x="50">PROPN</tspan>
+</text>
+
+<text class="displacy-token" fill="currentColor" text-anchor="middle" y="397.0">
+    <tspan class="displacy-word" fill="currentColor" x="225">is</tspan>
+    <tspan class="displacy-tag" dy="2em" fill="currentColor" x="225">AUX</tspan>
+</text>
+
+<text class="displacy-token" fill="currentColor" text-anchor="middle" y="397.0">
+    <tspan class="displacy-word" fill="currentColor" x="400">looking</tspan>
+    <tspan class="displacy-tag" dy="2em" fill="currentColor" x="400">VERB</tspan>
+</text>
+
+<text class="displacy-token" fill="currentColor" text-anchor="middle" y="397.0">
+    <tspan class="displacy-word" fill="currentColor" x="575">at</tspan>
+    <tspan class="displacy-tag" dy="2em" fill="currentColor" x="575">ADP</tspan>
+</text>
+
+<text class="displacy-token" fill="currentColor" text-anchor="middle" y="397.0">
+    <tspan class="displacy-word" fill="currentColor" x="750">buying</tspan>
+    <tspan class="displacy-tag" dy="2em" fill="currentColor" x="750">VERB</tspan>
+</text>
+
+<text class="displacy-token" fill="currentColor" text-anchor="middle" y="397.0">
+    <tspan class="displacy-word" fill="currentColor" x="925">U.K.</tspan>
+    <tspan class="displacy-tag" dy="2em" fill="currentColor" x="925">PROPN</tspan>
+</text>
+
+<text class="displacy-token" fill="currentColor" text-anchor="middle" y="397.0">
+    <tspan class="displacy-word" fill="currentColor" x="1100">startup</tspan>
+    <tspan class="displacy-tag" dy="2em" fill="currentColor" x="1100">VERB</tspan>
+</text>
+
+<text class="displacy-token" fill="currentColor" text-anchor="middle" y="397.0">
+    <tspan class="displacy-word" fill="currentColor" x="1275">for</tspan>
+    <tspan class="displacy-tag" dy="2em" fill="currentColor" x="1275">ADP</tspan>
+</text>
+
+<text class="displacy-token" fill="currentColor" text-anchor="middle" y="397.0">
+    <tspan class="displacy-word" fill="currentColor" x="1450">$</tspan>
+    <tspan class="displacy-tag" dy="2em" fill="currentColor" x="1450">SYM</tspan>
+</text>
+
+<text class="displacy-token" fill="currentColor" text-anchor="middle" y="397.0">
+    <tspan class="displacy-word" fill="currentColor" x="1625">1</tspan>
+    <tspan class="displacy-tag" dy="2em" fill="currentColor" x="1625">NUM</tspan>
+</text>
+
+<text class="displacy-token" fill="currentColor" text-anchor="middle" y="397.0">
+    <tspan class="displacy-word" fill="currentColor" x="1800">billion</tspan>
+    <tspan class="displacy-tag" dy="2em" fill="currentColor" x="1800">NUM</tspan>
+</text>
+
+<g class="displacy-arrow">
+    <path class="displacy-arc" id="arrow-9864daccb93f44e29aac8d4d3a02e223-0-0" stroke-width="2px" d="M70,352.0 C70,177.0 390.0,177.0 390.0,352.0" fill="none" stroke="currentColor"/>
+    <text dy="1.25em" style="font-size: 0.8em; letter-spacing: 1px">
+        <textPath xlink:href="#arrow-9864daccb93f44e29aac8d4d3a02e223-0-0" class="displacy-label" startOffset="50%" side="left" fill="currentColor" text-anchor="middle">nsubj</textPath>
+    </text>
+    <path class="displacy-arrowhead" d="M70,354.0 L62,342.0 78,342.0" fill="currentColor"/>
+</g>
+
+<g class="displacy-arrow">
+    <path class="displacy-arc" id="arrow-9864daccb93f44e29aac8d4d3a02e223-0-1" stroke-width="2px" d="M245,352.0 C245,264.5 385.0,264.5 385.0,352.0" fill="none" stroke="currentColor"/>
+    <text dy="1.25em" style="font-size: 0.8em; letter-spacing: 1px">
+        <textPath xlink:href="#arrow-9864daccb93f44e29aac8d4d3a02e223-0-1" class="displacy-label" startOffset="50%" side="left" fill="currentColor" text-anchor="middle">aux</textPath>
+    </text>
+    <path class="displacy-arrowhead" d="M245,354.0 L237,342.0 253,342.0" fill="currentColor"/>
+</g>
+
+<g class="displacy-arrow">
+    <path class="displacy-arc" id="arrow-9864daccb93f44e29aac8d4d3a02e223-0-2" stroke-width="2px" d="M420,352.0 C420,264.5 560.0,264.5 560.0,352.0" fill="none" stroke="currentColor"/>
+    <text dy="1.25em" style="font-size: 0.8em; letter-spacing: 1px">
+        <textPath xlink:href="#arrow-9864daccb93f44e29aac8d4d3a02e223-0-2" class="displacy-label" startOffset="50%" side="left" fill="currentColor" text-anchor="middle">prep</textPath>
+    </text>
+    <path class="displacy-arrowhead" d="M560.0,354.0 L568.0,342.0 552.0,342.0" fill="currentColor"/>
+</g>
+
+<g class="displacy-arrow">
+    <path class="displacy-arc" id="arrow-9864daccb93f44e29aac8d4d3a02e223-0-3" stroke-width="2px" d="M595,352.0 C595,264.5 735.0,264.5 735.0,352.0" fill="none" stroke="currentColor"/>
+    <text dy="1.25em" style="font-size: 0.8em; letter-spacing: 1px">
+        <textPath xlink:href="#arrow-9864daccb93f44e29aac8d4d3a02e223-0-3" class="displacy-label" startOffset="50%" side="left" fill="currentColor" text-anchor="middle">pcomp</textPath>
+    </text>
+    <path class="displacy-arrowhead" d="M735.0,354.0 L743.0,342.0 727.0,342.0" fill="currentColor"/>
+</g>
+
+<g class="displacy-arrow">
+    <path class="displacy-arc" id="arrow-9864daccb93f44e29aac8d4d3a02e223-0-4" stroke-width="2px" d="M770,352.0 C770,264.5 910.0,264.5 910.0,352.0" fill="none" stroke="currentColor"/>
+    <text dy="1.25em" style="font-size: 0.8em; letter-spacing: 1px">
+        <textPath xlink:href="#arrow-9864daccb93f44e29aac8d4d3a02e223-0-4" class="displacy-label" startOffset="50%" side="left" fill="currentColor" text-anchor="middle">dobj</textPath>
+    </text>
+    <path class="displacy-arrowhead" d="M910.0,354.0 L918.0,342.0 902.0,342.0" fill="currentColor"/>
+</g>
+
+<g class="displacy-arrow">
+    <path class="displacy-arc" id="arrow-9864daccb93f44e29aac8d4d3a02e223-0-5" stroke-width="2px" d="M420,352.0 C420,2.0 1100.0,2.0 1100.0,352.0" fill="none" stroke="currentColor"/>
+    <text dy="1.25em" style="font-size: 0.8em; letter-spacing: 1px">
+        <textPath xlink:href="#arrow-9864daccb93f44e29aac8d4d3a02e223-0-5" class="displacy-label" startOffset="50%" side="left" fill="currentColor" text-anchor="middle">dep</textPath>
+    </text>
+    <path class="displacy-arrowhead" d="M1100.0,354.0 L1108.0,342.0 1092.0,342.0" fill="currentColor"/>
+</g>
+
+<g class="displacy-arrow">
+    <path class="displacy-arc" id="arrow-9864daccb93f44e29aac8d4d3a02e223-0-6" stroke-width="2px" d="M1120,352.0 C1120,264.5 1260.0,264.5 1260.0,352.0" fill="none" stroke="currentColor"/>
+    <text dy="1.25em" style="font-size: 0.8em; letter-spacing: 1px">
+        <textPath xlink:href="#arrow-9864daccb93f44e29aac8d4d3a02e223-0-6" class="displacy-label" startOffset="50%" side="left" fill="currentColor" text-anchor="middle">prep</textPath>
+    </text>
+    <path class="displacy-arrowhead" d="M1260.0,354.0 L1268.0,342.0 1252.0,342.0" fill="currentColor"/>
+</g>
+
+<g class="displacy-arrow">
+    <path class="displacy-arc" id="arrow-9864daccb93f44e29aac8d4d3a02e223-0-7" stroke-width="2px" d="M1470,352.0 C1470,177.0 1790.0,177.0 1790.0,352.0" fill="none" stroke="currentColor"/>
+    <text dy="1.25em" style="font-size: 0.8em; letter-spacing: 1px">
+        <textPath xlink:href="#arrow-9864daccb93f44e29aac8d4d3a02e223-0-7" class="displacy-label" startOffset="50%" side="left" fill="currentColor" text-anchor="middle">quantmod</textPath>
+    </text>
+    <path class="displacy-arrowhead" d="M1470,354.0 L1462,342.0 1478,342.0" fill="currentColor"/>
+</g>
+
+<g class="displacy-arrow">
+    <path class="displacy-arc" id="arrow-9864daccb93f44e29aac8d4d3a02e223-0-8" stroke-width="2px" d="M1645,352.0 C1645,264.5 1785.0,264.5 1785.0,352.0" fill="none" stroke="currentColor"/>
+    <text dy="1.25em" style="font-size: 0.8em; letter-spacing: 1px">
+        <textPath xlink:href="#arrow-9864daccb93f44e29aac8d4d3a02e223-0-8" class="displacy-label" startOffset="50%" side="left" fill="currentColor" text-anchor="middle">compound</textPath>
+    </text>
+    <path class="displacy-arrowhead" d="M1645,354.0 L1637,342.0 1653,342.0" fill="currentColor"/>
+</g>
+
+<g class="displacy-arrow">
+    <path class="displacy-arc" id="arrow-9864daccb93f44e29aac8d4d3a02e223-0-9" stroke-width="2px" d="M1295,352.0 C1295,89.5 1795.0,89.5 1795.0,352.0" fill="none" stroke="currentColor"/>
+    <text dy="1.25em" style="font-size: 0.8em; letter-spacing: 1px">
+        <textPath xlink:href="#arrow-9864daccb93f44e29aac8d4d3a02e223-0-9" class="displacy-label" startOffset="50%" side="left" fill="currentColor" text-anchor="middle">pobj</textPath>
+    </text>
+    <path class="displacy-arrowhead" d="M1795.0,354.0 L1803.0,342.0 1787.0,342.0" fill="currentColor"/>
+</g>
+</svg>
+</figure>
+</body>
+</html></span></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Using the &#39;dep&#39; visualizer
+Serving on http://0.0.0.0:5000 ...
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>127.0.0.1 - - [14/Mar/2022 04:03:50] &quot;GET / HTTP/1.1&quot; 200 9246
+127.0.0.1 - - [14/Mar/2022 04:03:51] &quot;GET /favicon.ico HTTP/1.1&quot; 200 9246
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shutting down server on port 5000.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 標示實體</span>
+<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;When Sebastian Thrun started working on self-driving cars &quot;</span> <span class="o">+</span> \
+       <span class="s2">&quot;at Google in 2007, few people outside of the company took him seriously.&quot;</span>
+
+<span class="n">doc</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="c1"># style=&quot;ent&quot;：實體</span>
+<span class="n">displacy</span><span class="o">.</span><span class="n">serve</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;ent&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><span class="tex2jax_ignore"><!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>displaCy</title>
+    </head>
+
+    <body style="font-size: 16px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; padding: 4rem 2rem; direction: ltr">
+<figure style="margin-bottom: 6rem">
+<div class="entities" style="line-height: 2.5; direction: ltr">When 
+<mark class="entity" style="background: #aa9cfc; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em;">
+    Sebastian Thrun
+    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; vertical-align: middle; margin-left: 0.5rem">PERSON</span>
+</mark>
+ started working on self-driving cars at 
+<mark class="entity" style="background: #7aecec; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em;">
+    Google
+    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; vertical-align: middle; margin-left: 0.5rem">ORG</span>
+</mark>
+ in 
+<mark class="entity" style="background: #bfe1d9; padding: 0.45em 0.6em; margin: 0 0.25em; line-height: 1; border-radius: 0.35em;">
+    2007
+    <span style="font-size: 0.8em; font-weight: bold; line-height: 1; border-radius: 0.35em; vertical-align: middle; margin-left: 0.5rem">DATE</span>
+</mark>
+, few people outside of the company took him seriously.</div>
+</figure>
+</body>
+</html></span></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Using the &#39;ent&#39; visualizer
+Serving on http://0.0.0.0:5000 ...
+
+Shutting down server on port 5000.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 繁體中文分詞</span>
+<span class="kn">import</span> <span class="nn">spacy</span>
+
+<span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;zh_core_web_sm&quot;</span><span class="p">)</span>
+<span class="n">doc</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s2">&quot;清華大學位於新竹&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">doc</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">pos_</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">dep_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>清華 NOUN nsubj
+大 ADV advmod
+學位 ADV dep
+於 ADP case
+新竹 PROPN ROOT
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 簡體中文分詞</span>
+<span class="kn">import</span> <span class="nn">spacy</span>
+
+<span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;zh_core_web_sm&quot;</span><span class="p">)</span>
+<span class="n">doc</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s2">&quot;清华大学位于北京&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">doc</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">pos_</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">dep_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>清华 PROPN compound:nn
+大学 NOUN nsubj
+位于 VERB ROOT
+北京 PROPN dobj
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 顯示中文語意分析圖</span>
+<span class="kn">from</span> <span class="nn">spacy</span> <span class="kn">import</span> <span class="n">displacy</span>
+
+<span class="n">displacy</span><span class="o">.</span><span class="n">serve</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;dep&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><span class="tex2jax_ignore"><!DOCTYPE html>
+<html lang="zh">
+    <head>
+        <title>displaCy</title>
+    </head>
+
+    <body style="font-size: 16px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; padding: 4rem 2rem; direction: ltr">
+<figure style="margin-bottom: 6rem">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:lang="zh" id="96b7e16664b0409886c789b455914ef4-0" class="displacy" width="750" height="224.5" direction="ltr" style="max-width: none; height: 224.5px; color: #000000; background: #ffffff; font-family: Arial; direction: ltr">
+<text class="displacy-token" fill="currentColor" text-anchor="middle" y="134.5">
+    <tspan class="displacy-word" fill="currentColor" x="50">清华</tspan>
+    <tspan class="displacy-tag" dy="2em" fill="currentColor" x="50">PROPN</tspan>
+</text>
+
+<text class="displacy-token" fill="currentColor" text-anchor="middle" y="134.5">
+    <tspan class="displacy-word" fill="currentColor" x="225">大学</tspan>
+    <tspan class="displacy-tag" dy="2em" fill="currentColor" x="225">NOUN</tspan>
+</text>
+
+<text class="displacy-token" fill="currentColor" text-anchor="middle" y="134.5">
+    <tspan class="displacy-word" fill="currentColor" x="400">位于</tspan>
+    <tspan class="displacy-tag" dy="2em" fill="currentColor" x="400">VERB</tspan>
+</text>
+
+<text class="displacy-token" fill="currentColor" text-anchor="middle" y="134.5">
+    <tspan class="displacy-word" fill="currentColor" x="575">北京</tspan>
+    <tspan class="displacy-tag" dy="2em" fill="currentColor" x="575">PROPN</tspan>
+</text>
+
+<g class="displacy-arrow">
+    <path class="displacy-arc" id="arrow-96b7e16664b0409886c789b455914ef4-0-0" stroke-width="2px" d="M70,89.5 C70,2.0 225.0,2.0 225.0,89.5" fill="none" stroke="currentColor"/>
+    <text dy="1.25em" style="font-size: 0.8em; letter-spacing: 1px">
+        <textPath xlink:href="#arrow-96b7e16664b0409886c789b455914ef4-0-0" class="displacy-label" startOffset="50%" side="left" fill="currentColor" text-anchor="middle">compound:nn</textPath>
+    </text>
+    <path class="displacy-arrowhead" d="M70,91.5 L62,79.5 78,79.5" fill="currentColor"/>
+</g>
+
+<g class="displacy-arrow">
+    <path class="displacy-arc" id="arrow-96b7e16664b0409886c789b455914ef4-0-1" stroke-width="2px" d="M245,89.5 C245,2.0 400.0,2.0 400.0,89.5" fill="none" stroke="currentColor"/>
+    <text dy="1.25em" style="font-size: 0.8em; letter-spacing: 1px">
+        <textPath xlink:href="#arrow-96b7e16664b0409886c789b455914ef4-0-1" class="displacy-label" startOffset="50%" side="left" fill="currentColor" text-anchor="middle">nsubj</textPath>
+    </text>
+    <path class="displacy-arrowhead" d="M245,91.5 L237,79.5 253,79.5" fill="currentColor"/>
+</g>
+
+<g class="displacy-arrow">
+    <path class="displacy-arc" id="arrow-96b7e16664b0409886c789b455914ef4-0-2" stroke-width="2px" d="M420,89.5 C420,2.0 575.0,2.0 575.0,89.5" fill="none" stroke="currentColor"/>
+    <text dy="1.25em" style="font-size: 0.8em; letter-spacing: 1px">
+        <textPath xlink:href="#arrow-96b7e16664b0409886c789b455914ef4-0-2" class="displacy-label" startOffset="50%" side="left" fill="currentColor" text-anchor="middle">dobj</textPath>
+    </text>
+    <path class="displacy-arrowhead" d="M575.0,91.5 L583.0,79.5 567.0,79.5" fill="currentColor"/>
+</g>
+</svg>
+</figure>
+</body>
+</html></span></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Using the &#39;dep&#39; visualizer
+Serving on http://0.0.0.0:5000 ...
+
+Shutting down server on port 5000.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 顯示依存關係</span>
+<span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;zh_core_web_sm&quot;</span><span class="p">)</span>
+<span class="n">doc</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s2">&quot;清华大学位于北京&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">doc</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">pos_</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">dep_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>清华 PROPN compound:nn
+大学 NOUN nsubj
+位于 VERB ROOT
+北京 PROPN dobj
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 分詞，並判斷是否不在字典中(Out of Vocabulary, OOV)</span>
+<span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;en_core_web_md&quot;</span><span class="p">)</span>
+<span class="n">tokens</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s2">&quot;dog cat banana afskfsd&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">has_vector</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">vector_norm</span><span class="p">,</span> <span class="n">token</span><span class="o">.</span><span class="n">is_oov</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>dog True 6.27752 True
+cat True 6.0239015 True
+banana True 6.650522 True
+afskfsd True 6.1036773 True
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 相似度比較</span>
+<span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;en_core_web_md&quot;</span><span class="p">)</span>
+
+<span class="c1"># 測試兩語句</span>
+<span class="n">doc1</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s2">&quot;I like salty fries and hamburgers.&quot;</span><span class="p">)</span>
+<span class="n">doc2</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="s2">&quot;Fast food tastes very good.&quot;</span><span class="p">)</span>
+
+<span class="c1"># 兩語句的相似度比較</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">doc1</span><span class="p">,</span> <span class="s2">&quot;&lt;-&gt;&quot;</span><span class="p">,</span> <span class="n">doc2</span><span class="p">,</span> <span class="n">doc1</span><span class="o">.</span><span class="n">similarity</span><span class="p">(</span><span class="n">doc2</span><span class="p">))</span>
+
+<span class="c1"># 關鍵字的相似度比較</span>
+<span class="n">french_fries</span> <span class="o">=</span> <span class="n">doc1</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+<span class="n">burgers</span> <span class="o">=</span> <span class="n">doc1</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">french_fries</span><span class="p">,</span> <span class="s2">&quot;&lt;-&gt;&quot;</span><span class="p">,</span> <span class="n">burgers</span><span class="p">,</span> <span class="n">french_fries</span><span class="o">.</span><span class="n">similarity</span><span class="p">(</span><span class="n">burgers</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>I like salty fries and hamburgers. &lt;-&gt; Fast food tastes very good. 0.3325843940415502
+salty fries &lt;-&gt; hamburgers 0.4129716753959656
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/j9/71c8r2vs343cb9329xbww0240000gn/T/ipykernel_21188/3057673768.py:9: UserWarning: [W007] The model you&#39;re using has no word vectors loaded, so the result of the Doc.similarity method will be based on the tagger, parser and NER, which may not give useful similarity judgements. This may happen if you&#39;re using one of the small models, e.g. `en_core_web_sm`, which don&#39;t ship with word vectors and only use context-sensitive tensors. You can always add your own word vectors, or use one of the larger models instead if available.
+  print(doc1, &quot;&lt;-&gt;&quot;, doc2, doc1.similarity(doc2))
+/var/folders/j9/71c8r2vs343cb9329xbww0240000gn/T/ipykernel_21188/3057673768.py:14: UserWarning: [W007] The model you&#39;re using has no word vectors loaded, so the result of the Span.similarity method will be based on the tagger, parser and NER, which may not give useful similarity judgements. This may happen if you&#39;re using one of the small models, e.g. `en_core_web_sm`, which don&#39;t ship with word vectors and only use context-sensitive tensors. You can always add your own word vectors, or use one of the larger models instead if available.
+  print(french_fries, &quot;&lt;-&gt;&quot;, burgers, french_fries.similarity(burgers))
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "nlp_env"
+        },
+        kernelOptions: {
+            kernelName: "nlp_env",
+            path: "./dl_book"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'nlp_env'</script>
+
+              </div>
+              
+            
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="11_07_%E4%B8%AD%E6%96%87_NLP.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title"><span class="section-number">10. </span>中文 NLP</p>
+        </div>
+    </a>
+</div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+  <p>
+    
+      By The Jupyter Book Community<br/>
+    
+        &copy; Copyright 2021.<br/>
+  </p>
+</footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
